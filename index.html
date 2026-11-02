@@ -5,26 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PDF Text Editor</title>
 <style>
-@font-face{font-family:"M-Sans";src:url(fonts/LiberationSans-Regular.ttf) format("truetype"), url(LiberationSans-Regular.ttf) format("truetype");font-weight:400;font-style:normal}
-@font-face{font-family:"M-Sans";src:url(fonts/LiberationSans-Bold.ttf) format("truetype"), url(LiberationSans-Bold.ttf) format("truetype");font-weight:700;font-style:normal}
-@font-face{font-family:"M-Sans";src:url(fonts/LiberationSans-Italic.ttf) format("truetype"), url(LiberationSans-Italic.ttf) format("truetype");font-weight:400;font-style:italic}
-@font-face{font-family:"M-Sans";src:url(fonts/LiberationSans-BoldItalic.ttf) format("truetype"), url(LiberationSans-BoldItalic.ttf) format("truetype");font-weight:700;font-style:italic}
-@font-face{font-family:"M-Serif";src:url(fonts/LiberationSerif-Regular.ttf) format("truetype"), url(LiberationSerif-Regular.ttf) format("truetype");font-weight:400;font-style:normal}
-@font-face{font-family:"M-Serif";src:url(fonts/LiberationSerif-Bold.ttf) format("truetype"), url(LiberationSerif-Bold.ttf) format("truetype");font-weight:700;font-style:normal}
-@font-face{font-family:"M-Serif";src:url(fonts/LiberationSerif-Italic.ttf) format("truetype"), url(LiberationSerif-Italic.ttf) format("truetype");font-weight:400;font-style:italic}
-@font-face{font-family:"M-Serif";src:url(fonts/LiberationSerif-BoldItalic.ttf) format("truetype"), url(LiberationSerif-BoldItalic.ttf) format("truetype");font-weight:700;font-style:italic}
-@font-face{font-family:"M-Mono";src:url(fonts/LiberationMono-Regular.ttf) format("truetype"), url(LiberationMono-Regular.ttf) format("truetype");font-weight:400;font-style:normal}
-@font-face{font-family:"M-Mono";src:url(fonts/LiberationMono-Bold.ttf) format("truetype"), url(LiberationMono-Bold.ttf) format("truetype");font-weight:700;font-style:normal}
-@font-face{font-family:"M-Mono";src:url(fonts/LiberationMono-Italic.ttf) format("truetype"), url(LiberationMono-Italic.ttf) format("truetype");font-weight:400;font-style:italic}
-@font-face{font-family:"M-Mono";src:url(fonts/LiberationMono-BoldItalic.ttf) format("truetype"), url(LiberationMono-BoldItalic.ttf) format("truetype");font-weight:700;font-style:italic}
-@font-face{font-family:"M-Carlito";src:url(fonts/Carlito-Regular.ttf) format("truetype"), url(Carlito-Regular.ttf) format("truetype");font-weight:400;font-style:normal}
-@font-face{font-family:"M-Carlito";src:url(fonts/Carlito-Bold.ttf) format("truetype"), url(Carlito-Bold.ttf) format("truetype");font-weight:700;font-style:normal}
-@font-face{font-family:"M-Carlito";src:url(fonts/Carlito-Italic.ttf) format("truetype"), url(Carlito-Italic.ttf) format("truetype");font-weight:400;font-style:italic}
-@font-face{font-family:"M-Carlito";src:url(fonts/Carlito-BoldItalic.ttf) format("truetype"), url(Carlito-BoldItalic.ttf) format("truetype");font-weight:700;font-style:italic}
-@font-face{font-family:"M-Caladea";src:url(fonts/Caladea-Regular.ttf) format("truetype"), url(Caladea-Regular.ttf) format("truetype");font-weight:400;font-style:normal}
-@font-face{font-family:"M-Caladea";src:url(fonts/Caladea-Bold.ttf) format("truetype"), url(Caladea-Bold.ttf) format("truetype");font-weight:700;font-style:normal}
-@font-face{font-family:"M-Caladea";src:url(fonts/Caladea-Italic.ttf) format("truetype"), url(Caladea-Italic.ttf) format("truetype");font-weight:400;font-style:italic}
-@font-face{font-family:"M-Caladea";src:url(fonts/Caladea-BoldItalic.ttf) format("truetype"), url(Caladea-BoldItalic.ttf) format("truetype");font-weight:700;font-style:italic}
+@font-face{font-family:"M-Sans";src:url(LiberationSans-Regular.ttf) format("truetype"), url(fonts/LiberationSans-Regular.ttf) format("truetype");font-weight:400;font-style:normal}
+@font-face{font-family:"M-Sans";src:url(LiberationSans-Bold.ttf) format("truetype"), url(fonts/LiberationSans-Bold.ttf) format("truetype");font-weight:700;font-style:normal}
+@font-face{font-family:"M-Sans";src:url(LiberationSans-Italic.ttf) format("truetype"), url(fonts/LiberationSans-Italic.ttf) format("truetype");font-weight:400;font-style:italic}
+@font-face{font-family:"M-Sans";src:url(LiberationSans-BoldItalic.ttf) format("truetype"), url(fonts/LiberationSans-BoldItalic.ttf) format("truetype");font-weight:700;font-style:italic}
+@font-face{font-family:"M-Serif";src:url(LiberationSerif-Regular.ttf) format("truetype"), url(fonts/LiberationSerif-Regular.ttf) format("truetype");font-weight:400;font-style:normal}
+@font-face{font-family:"M-Serif";src:url(LiberationSerif-Bold.ttf) format("truetype"), url(fonts/LiberationSerif-Bold.ttf) format("truetype");font-weight:700;font-style:normal}
+@font-face{font-family:"M-Serif";src:url(LiberationSerif-Italic.ttf) format("truetype"), url(fonts/LiberationSerif-Italic.ttf) format("truetype");font-weight:400;font-style:italic}
+@font-face{font-family:"M-Serif";src:url(LiberationSerif-BoldItalic.ttf) format("truetype"), url(fonts/LiberationSerif-BoldItalic.ttf) format("truetype");font-weight:700;font-style:italic}
+@font-face{font-family:"M-Mono";src:url(LiberationMono-Regular.ttf) format("truetype"), url(fonts/LiberationMono-Regular.ttf) format("truetype");font-weight:400;font-style:normal}
+@font-face{font-family:"M-Mono";src:url(LiberationMono-Bold.ttf) format("truetype"), url(fonts/LiberationMono-Bold.ttf) format("truetype");font-weight:700;font-style:normal}
+@font-face{font-family:"M-Mono";src:url(LiberationMono-Italic.ttf) format("truetype"), url(fonts/LiberationMono-Italic.ttf) format("truetype");font-weight:400;font-style:italic}
+@font-face{font-family:"M-Mono";src:url(LiberationMono-BoldItalic.ttf) format("truetype"), url(fonts/LiberationMono-BoldItalic.ttf) format("truetype");font-weight:700;font-style:italic}
+@font-face{font-family:"M-Carlito";src:url(Carlito-Regular.ttf) format("truetype"), url(fonts/Carlito-Regular.ttf) format("truetype");font-weight:400;font-style:normal}
+@font-face{font-family:"M-Carlito";src:url(Carlito-Bold.ttf) format("truetype"), url(fonts/Carlito-Bold.ttf) format("truetype");font-weight:700;font-style:normal}
+@font-face{font-family:"M-Carlito";src:url(Carlito-Italic.ttf) format("truetype"), url(fonts/Carlito-Italic.ttf) format("truetype");font-weight:400;font-style:italic}
+@font-face{font-family:"M-Carlito";src:url(Carlito-BoldItalic.ttf) format("truetype"), url(fonts/Carlito-BoldItalic.ttf) format("truetype");font-weight:700;font-style:italic}
+@font-face{font-family:"M-Caladea";src:url(Caladea-Regular.ttf) format("truetype"), url(fonts/Caladea-Regular.ttf) format("truetype");font-weight:400;font-style:normal}
+@font-face{font-family:"M-Caladea";src:url(Caladea-Bold.ttf) format("truetype"), url(fonts/Caladea-Bold.ttf) format("truetype");font-weight:700;font-style:normal}
+@font-face{font-family:"M-Caladea";src:url(Caladea-Italic.ttf) format("truetype"), url(fonts/Caladea-Italic.ttf) format("truetype");font-weight:400;font-style:italic}
+@font-face{font-family:"M-Caladea";src:url(Caladea-BoldItalic.ttf) format("truetype"), url(fonts/Caladea-BoldItalic.ttf) format("truetype");font-weight:700;font-style:italic}
 
 :root{
   --bg:#eceae6; --panel:#ffffff; --ink:#1d1d1f; --muted:#6b6b70; --line:#d9d6d0;
@@ -69,6 +69,8 @@ main{padding:24px 16px 80px;display:flex;flex-direction:column;align-items:cente
 #bar{position:absolute;z-index:60;display:none;background:var(--panel);border:1px solid var(--line);border-radius:10px;
   box-shadow:0 6px 20px rgba(0,0,0,.18);padding:5px;gap:4px;align-items:center;font-size:12px;white-space:nowrap}
 #bar .btn{padding:4px 9px;font-size:12px;border-radius:6px}
+#bar select{font:inherit;font-size:12px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);padding:4px 6px;max-width:190px}
+#bar #barI.on{background:var(--accent);border-color:var(--accent);color:#fff}
 #bar .font{color:var(--muted);padding:0 6px 0 4px}
 #bar .font b{color:var(--ink);font-weight:600}
 #lib{width:min(640px,100%);background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px 20px}
@@ -123,6 +125,9 @@ main{padding:24px 16px 80px;display:flex;flex-direction:column;align-items:cente
   </section>
 </main>
 <div id="bar">
+  <select id="barFam" title="Font"></select>
+  <select id="barW" title="Weight"></select>
+  <button class="btn" id="barI" title="Italic"><i>I</i></button>
   <span class="font" id="barFont"></span>
   <button class="btn danger" id="barRemove">Remove</button>
   <button class="btn" id="barRestore">Restore</button>
@@ -264,7 +269,7 @@ function scheduleSave(){
 }
 async function saveNow(){
   if(!state?.docId) return;
-  const edits = allEdits().map(i => ({k:i.key, str:i.str, text:i.text}));
+  const edits = allEdits().map(i => ({k:i.key, str:i.str, text:i.text, ov:i.ov||null}));
   try{
     const doc = await DB.get(state.docId);
     if(!doc) return;
@@ -462,12 +467,64 @@ function applySavedEdits(edits){
     const it = byKey.get(e.k);
     if(!it || it.str!==e.str){ missed++; continue; }
     applyCover(it);
-    it.text = e.text; it.el.textContent = e.text; it.edited = e.text!==it.str;
+    it.text = e.text; it.el.textContent = e.text; it.ov = e.ov || null;
+    it.edited = e.text!==it.str || !!it.ov;
+    if(it.ov) restyle(it);
     it.el.classList.toggle("edited", it.edited);
   }
   if(missed) toast(`${missed} saved edit${missed>1?"s":""} couldn't be matched to the page.`, 4000);
   $("saveState").textContent = "All changes saved";
 }
+
+// ---------- Font menu (Google Docs fonts) ----------
+const GFONTS = [{"id":"amatic-sc","label":"Amatic SC","desc":"Amatic SC","g":"sans-serif","a":1.016,"d":0.245,"v":[[400,"normal"],[700,"normal"]]},{"id":"arimo","label":"Arial","desc":"Arimo (same letter widths as Arial)","g":"sans-serif","a":0.905,"d":0.212,"v":[[400,"italic"],[400,"normal"],[500,"italic"],[500,"normal"],[600,"italic"],[600,"normal"],[700,"italic"],[700,"normal"]]},{"id":"carlito","label":"Calibri","desc":"Carlito (same letter widths as Calibri)","g":"sans-serif","a":0.952,"d":0.269,"v":[[400,"normal"],[400,"italic"],[700,"normal"],[700,"italic"]]},{"id":"caveat","label":"Caveat","desc":"Caveat","g":"cursive","a":0.96,"d":0.3,"v":[[400,"normal"],[500,"normal"],[600,"normal"],[700,"normal"]]},{"id":"comfortaa","label":"Comfortaa","desc":"Comfortaa","g":"sans-serif","a":0.881,"d":0.234,"v":[[300,"normal"],[400,"normal"],[500,"normal"],[600,"normal"],[700,"normal"]]},{"id":"comic-neue","label":"Comic Sans MS","desc":"Comic Neue (look-alike)","g":"cursive","a":0.9,"d":0.25,"v":[[300,"italic"],[300,"normal"],[400,"italic"],[400,"normal"],[700,"italic"],[700,"normal"]]},{"id":"cousine","label":"Courier New","desc":"Cousine (same letter widths as Courier New)","g":"monospace","a":0.833,"d":0.3,"v":[[400,"italic"],[400,"normal"],[700,"italic"],[700,"normal"]]},{"id":"eb-garamond","label":"EB Garamond","desc":"EB Garamond","g":"serif","a":1.007,"d":0.298,"v":[[400,"italic"],[400,"normal"],[500,"italic"],[500,"normal"],[600,"italic"],[600,"normal"],[700,"italic"],[700,"normal"],[800,"italic"],[800,"normal"]]},{"id":"gelasio","label":"Georgia","desc":"Gelasio (same letter widths as Georgia)","g":"serif","a":0.928,"d":0.342,"v":[[400,"italic"],[400,"normal"],[500,"italic"],[500,"normal"],[600,"italic"],[600,"normal"],[700,"italic"],[700,"normal"]]},{"id":"anton","label":"Impact","desc":"Anton (look-alike)","g":"sans-serif","a":1.176,"d":0.329,"v":[[400,"normal"]]},{"id":"lexend","label":"Lexend","desc":"Lexend","g":"sans-serif","a":1.0,"d":0.25,"v":[[100,"normal"],[200,"normal"],[300,"normal"],[400,"normal"],[500,"normal"],[600,"normal"],[700,"normal"],[800,"normal"],[900,"normal"]]},{"id":"lobster","label":"Lobster","desc":"Lobster","g":"cursive","a":1.0,"d":0.25,"v":[[400,"normal"]]},{"id":"lora","label":"Lora","desc":"Lora","g":"serif","a":1.006,"d":0.274,"v":[[400,"italic"],[400,"normal"],[500,"italic"],[500,"normal"],[600,"italic"],[600,"normal"],[700,"italic"],[700,"normal"]]},{"id":"merriweather","label":"Merriweather","desc":"Merriweather","g":"serif","a":0.984,"d":0.273,"v":[[300,"italic"],[300,"normal"],[400,"italic"],[400,"normal"],[500,"italic"],[500,"normal"],[600,"italic"],[600,"normal"],[700,"italic"],[700,"normal"],[800,"italic"],[800,"normal"],[900,"italic"],[900,"normal"]]},{"id":"montserrat","label":"Montserrat","desc":"Montserrat","g":"sans-serif","a":0.968,"d":0.251,"v":[[100,"italic"],[100,"normal"],[200,"italic"],[200,"normal"],[300,"italic"],[300,"normal"],[400,"italic"],[400,"normal"],[500,"italic"],[500,"normal"],[600,"italic"],[600,"normal"],[700,"italic"],[700,"normal"],[800,"italic"],[800,"normal"],[900,"italic"],[900,"normal"]]},{"id":"noto-sans-symbols","label":"Noto Sans Symbols","desc":"Noto Sans Symbols","g":"sans-serif","a":1.48,"d":0.57,"v":[[100,"normal"],[200,"normal"],[300,"normal"],[400,"normal"],[500,"normal"],[600,"normal"],[700,"normal"],[800,"normal"],[900,"normal"]]},{"id":"nunito","label":"Nunito","desc":"Nunito","g":"sans-serif","a":1.011,"d":0.353,"v":[[200,"italic"],[200,"normal"],[300,"italic"],[300,"normal"],[400,"italic"],[400,"normal"],[500,"italic"],[500,"normal"],[600,"italic"],[600,"normal"],[700,"italic"],[700,"normal"],[800,"italic"],[800,"normal"],[900,"italic"],[900,"normal"]]},{"id":"oswald","label":"Oswald","desc":"Oswald","g":"sans-serif","a":1.193,"d":0.289,"v":[[200,"normal"],[300,"normal"],[400,"normal"],[500,"normal"],[600,"normal"],[700,"normal"]]},{"id":"pacifico","label":"Pacifico","desc":"Pacifico","g":"cursive","a":1.303,"d":0.453,"v":[[400,"normal"]]},{"id":"playfair-display","label":"Playfair Display","desc":"Playfair Display","g":"serif","a":1.082,"d":0.251,"v":[[400,"italic"],[400,"normal"],[500,"italic"],[500,"normal"],[600,"italic"],[600,"normal"],[700,"italic"],[700,"normal"],[800,"italic"],[800,"normal"],[900,"italic"],[900,"normal"]]},{"id":"roboto","label":"Roboto","desc":"Roboto","g":"sans-serif","a":0.928,"d":0.244,"v":[[100,"italic"],[100,"normal"],[200,"italic"],[200,"normal"],[300,"italic"],[300,"normal"],[400,"italic"],[400,"normal"],[500,"italic"],[500,"normal"],[600,"italic"],[600,"normal"],[700,"italic"],[700,"normal"],[800,"italic"],[800,"normal"],[900,"italic"],[900,"normal"]]},{"id":"roboto-mono","label":"Roboto Mono","desc":"Roboto Mono","g":"monospace","a":1.048,"d":0.271,"v":[[100,"italic"],[100,"normal"],[200,"italic"],[200,"normal"],[300,"italic"],[300,"normal"],[400,"italic"],[400,"normal"],[500,"italic"],[500,"normal"],[600,"italic"],[600,"normal"],[700,"italic"],[700,"normal"]]},{"id":"roboto-serif","label":"Roboto Serif","desc":"Roboto Serif","g":"serif","a":0.927,"d":0.244,"v":[[100,"italic"],[100,"normal"],[200,"italic"],[200,"normal"],[300,"italic"],[300,"normal"],[400,"italic"],[400,"normal"],[500,"italic"],[500,"normal"],[600,"italic"],[600,"normal"],[700,"italic"],[700,"normal"],[800,"italic"],[800,"normal"],[900,"italic"],[900,"normal"]]},{"id":"skranji","label":"Skranji","desc":"Skranji","g":"cursive","a":0.984,"d":0.374,"v":[[400,"normal"],[700,"normal"]]},{"id":"spectral","label":"Spectral","desc":"Spectral","g":"serif","a":1.059,"d":0.463,"v":[[200,"italic"],[200,"normal"],[300,"italic"],[300,"normal"],[400,"italic"],[400,"normal"],[500,"italic"],[500,"normal"],[600,"italic"],[600,"normal"],[700,"italic"],[700,"normal"],[800,"italic"],[800,"normal"]]},{"id":"tinos","label":"Times New Roman","desc":"Tinos (same letter widths as Times New Roman)","g":"serif","a":0.891,"d":0.216,"v":[[400,"italic"],[400,"normal"],[700,"italic"],[700,"normal"]]},{"id":"fira-sans","label":"Trebuchet MS","desc":"Fira Sans (look-alike)","g":"sans-serif","a":0.935,"d":0.265,"v":[[100,"italic"],[100,"normal"],[200,"italic"],[200,"normal"],[300,"italic"],[300,"normal"],[400,"italic"],[400,"normal"],[500,"italic"],[500,"normal"],[600,"italic"],[600,"normal"],[700,"italic"],[700,"normal"],[800,"italic"],[800,"normal"],[900,"italic"],[900,"normal"]]},{"id":"dejavu-sans","label":"Verdana","desc":"DejaVu Sans (look-alike)","g":"sans-serif","a":0.928,"d":0.236,"v":[[200,"normal"],[400,"normal"],[400,"italic"],[700,"normal"],[700,"italic"]]}];
+const gById = new Map(GFONTS.map(g=>[g.id,g]));
+const WNAMES = {100:"Thin",200:"Extra Light",300:"Light",400:"Regular",500:"Medium",600:"Semi Bold",700:"Bold",800:"Extra Bold",900:"Black",1000:"Extra Black"};
+const packCache = new Map();
+function loadPack(id){
+  if(!packCache.has(id)){
+    const p = (async () => {
+      let r = null;
+      try{ r = await fetch(`${id}.fontpack`); }catch(e){}
+      if(!r || !r.ok) r = await fetch(`fonts/${id}.fontpack`);
+      if(!r.ok) throw new Error(`Font file "${id}.fontpack" is missing from the website`);
+      const buf = await r.arrayBuffer();
+      const hl = new DataView(buf).getUint32(0, true);
+      const h = JSON.parse(new TextDecoder().decode(new Uint8Array(buf, 4, hl)));
+      const vs = h.variants.map(x => ({w:x.w, s:x.s, data:new Uint8Array(buf, 4+hl+x.o, x.l)}));
+      for(const v of vs){
+        try{ const ff = new FontFace("GF-"+id, v.data, {weight:String(v.w), style:v.s}); await ff.load(); document.fonts.add(ff); }catch(e){}
+      }
+      return vs;
+    })();
+    packCache.set(id, p);
+    p.catch(() => packCache.delete(id));
+  }
+  return packCache.get(id);
+}
+function pickW(list, w){ return list.reduce((a,b)=>Math.abs(b-w)<Math.abs(a-w)?b:a); }
+function famWeights(id, italic){
+  const g = gById.get(id); const st = italic?"italic":"normal";
+  let ws = g.v.filter(v=>v[1]===st).map(v=>v[0]); if(!ws.length) ws = g.v.map(v=>v[0]);
+  return [...new Set(ws)].sort((a,b)=>a-b);
+}
+function famHasItalic(id){ return gById.get(id).v.some(v=>v[1]==="italic"); }
+// Effective style of an item: user's choice if any, otherwise what the PDF uses.
+function eff(item){
+  const ov = item.ov || {};
+  const fam = ov.f || null;
+  let it = ov.i ?? item.info.italic;
+  let w = ov.w ?? (item.info.bold ? 700 : 400);
+  if(fam){
+    if(it && !famHasItalic(fam)) it = false;
+    w = pickW(famWeights(fam, it), w);
+  } else w = w >= 600 ? 700 : 400;
+  return {fam, w, it};
+}
+(function fillFamMenu(){
+  const sel = $("barFam");
+  sel.innerHTML = `<option value="">Original (match PDF)</option>` + GFONTS.map(g=>`<option value="${g.id}">${esc(g.label)}</option>`).join("");
+})();
 
 // ---------- Font analysis ----------
 function getFontInfo(page, fontName){
@@ -573,14 +630,15 @@ function buildItem(item){
 }
 
 function layoutItem(item){
-  const {el, pg, info} = item, sc = pg.vp.scale, F = FAMILIES[info.fam];
+  const {el, pg, info} = item, sc = pg.vp.scale, E = eff(item);
+  const F = E.fam ? gById.get(E.fam) : FAMILIES[info.fam];
   const R = pxRect(item);
   const fpx = item.size*sc;
   // Line box = font's own ascent+descent so the CSS baseline lands on the PDF baseline.
   const baseY = pg.vp.convertToViewportPoint(item.x, item.y)[1];
-  el.style.fontFamily = `"${F.css}", ${info.fam==="Serif"||info.fam==="Caladea"?"serif":info.fam==="Mono"?"monospace":"sans-serif"}`;
-  el.style.fontWeight = info.bold?700:400;
-  el.style.fontStyle = info.italic?"italic":"normal";
+  el.style.fontFamily = E.fam ? `"GF-${E.fam}", ${F.g}` : `"${F.css}", ${info.fam==="Serif"||info.fam==="Caladea"?"serif":info.fam==="Mono"?"monospace":"sans-serif"}`;
+  el.style.fontWeight = E.w;
+  el.style.fontStyle = E.it?"italic":"normal";
   el.style.fontSize = fpx+"px";
   el.style.lineHeight = ((F.a+F.d)*fpx)+"px";
   el.style.height = ((F.a+F.d)*fpx)+"px";
@@ -628,7 +686,7 @@ function finishEdit(){
   el.classList.remove("editing");
   const txt = el.textContent.replace(/[\r\n]+/g," ");
   item.text = txt;
-  item.edited = txt !== item.str;
+  item.edited = txt !== item.str || !!item.ov;
   el.classList.toggle("edited", item.edited);
   hideBar();
   updateCount();
@@ -659,19 +717,56 @@ function positionBar(){
 }
 function updateBarFont(item){
   const txt = item.el.textContent;
-  const exact = canUseExact(item.info, txt);
+  const E = eff(item);
+  $("barFam").value = E.fam || "";
+  const ws = E.fam ? famWeights(E.fam, E.it) : [400, 700];
+  $("barW").innerHTML = ws.map(w=>`<option value="${w}">${WNAMES[w]||w}</option>`).join("");
+  $("barW").value = String(E.w);
+  $("barW").disabled = ws.length < 2;
+  $("barI").classList.toggle("on", E.it);
+  $("barI").disabled = !!E.fam && !famHasItalic(E.fam);
+  if(E.fam){
+    const g = gById.get(E.fam);
+    $("barFont").textContent = g.desc !== g.label ? g.desc.replace(/^[^(]+\(/,"(") : "";
+    $("barFont").title = g.desc;
+    requestAnimationFrame(positionBar);
+    return;
+  }
+  const exact = canUseExact(item.info, txt) && !item.ov;
   const F = FAMILIES[item.info.fam];
   const w = (item.info.bold?" Bold":"")+(item.info.italic?" Italic":"");
   $("barFont").innerHTML = exact
-    ? `Font: <b>${esc(item.info.prettyName)}${w}</b> (original)`
-    : `Font: <b>${esc(item.info.prettyName)}${w}</b>${item.info.exact?" · new letters use a close match":" · close match"}`;
+    ? `<b>${esc(item.info.prettyName)}</b> (original)`
+    : `<b>${esc(item.info.prettyName)}</b>${item.info.exact?" · close match for new letters":" · close match"}`;
   $("barFont").title = exact ? "Uses the font embedded in this PDF." : `Uses ${F.file.replace("Liberation","Liberation ")} (same letter widths as ${F.label}) because the PDF only contains the letters it already used.`;
   requestAnimationFrame(positionBar);
 }
 function hideBar(){ bar.style.display="none"; }
-bar.addEventListener("mousedown", e => e.preventDefault());
+bar.addEventListener("mousedown", e => { if(e.target.tagName!=="SELECT" && e.target.tagName!=="OPTION") e.preventDefault(); });
+function setOv(item, patch){
+  const ov = {...(item.ov||{}), ...patch};
+  for(const k of Object.keys(ov)) if(ov[k]===null || ov[k]===undefined) delete ov[k];
+  item.ov = Object.keys(ov).length ? ov : null;
+}
+async function restyle(item){
+  const E = eff(item);
+  if(E.fam){
+    try{ await loadPack(E.fam); }
+    catch(e){ toast(e.message, 5000); setOv(item, {f:null}); }
+  }
+  layoutItem(item);
+  if(active===item){ updateBarFont(item); refocus(item); }
+}
+function refocus(item){
+  item.el.focus();
+  const r=document.createRange(); r.selectNodeContents(item.el); r.collapse(false);
+  const sel=getSelection(); sel.removeAllRanges(); sel.addRange(r);
+}
+$("barFam").onchange = e => { const it=active; if(!it) return; setOv(it, {f: e.target.value || null}); restyle(it); };
+$("barW").onchange = e => { const it=active; if(!it) return; setOv(it, {w: +e.target.value}); restyle(it); };
+$("barI").onclick = () => { const it=active; if(!it) return; setOv(it, {i: !eff(it).it}); restyle(it); };
 $("barRemove").onclick = () => { if(!active) return; active.el.textContent=""; finishEdit(); toast("Text removed"); };
-$("barRestore").onclick = () => { if(!active) return; active.el.textContent=active.str; finishEdit(); };
+$("barRestore").onclick = () => { if(!active) return; const it=active; it.ov=null; layoutItem(it); it.el.textContent=it.str; finishEdit(); };
 addEventListener("scroll", positionBar, {passive:true});
 addEventListener("resize", positionBar);
 
@@ -685,7 +780,7 @@ function updateCount(){
 }
 $("resetBtn").onclick = () => {
   finishEdit();
-  for(const it of allEdits()){ it.text=it.str; it.el.textContent=it.str; it.edited=false; it.el.classList.remove("edited"); }
+  for(const it of allEdits()){ it.text=it.str; it.el.textContent=it.str; it.edited=false; it.ov=null; layoutItem(it); it.el.classList.remove("edited"); }
   updateCount();
   scheduleSave();
 };
@@ -696,7 +791,7 @@ async function loadBundled(fam, bold, italic){
   const F = FAMILIES[fam];
   const sty = bold&&italic?"BoldItalic":bold?"Bold":italic?"Italic":"Regular";
   const url = `fonts/${F.file}-${sty}.ttf`;
-  if(!fileCache.has(url)) fileCache.set(url, fetch(url).then(r=>{ if(!r.ok) throw 0; return r.arrayBuffer(); }).catch(()=>fetch(url.replace("fonts/","")).then(r=>{ if(!r.ok) throw new Error("font"); return r.arrayBuffer(); })));
+  if(!fileCache.has(url)) fileCache.set(url, fetch(url.replace("fonts/","")).then(r=>{ if(!r.ok) throw 0; return r.arrayBuffer(); }).catch(()=>fetch(url).then(r=>{ if(!r.ok) throw new Error("font"); return r.arrayBuffer(); })));
   return fileCache.get(url);
 }
 function standardFont(fam, bold, italic){
@@ -742,8 +837,21 @@ async function buildPdf(){
     // 2) Write the new text at the same baseline, size and colour.
     const text = item.text.replace(/\s+$/,"");
     if(!text.trim()) continue;
-    const useExact = canUseExact(item.info, text);
-    const match = await embedMatch(item.info);
+    const E = eff(item);
+    if(E.fam){
+      const vs = await loadPack(E.fam);
+      const st = E.it?"italic":"normal";
+      const v = vs.find(x=>x.w===E.w && x.s===st) || vs.find(x=>x.w===E.w) || vs[0];
+      const k = `g:${E.fam}:${v.w}:${v.s}`;
+      if(!embedded.has(k)) embedded.set(k, doc.embedFont(v.data.slice(), {subset:false}));
+      const gf = await embedded.get(k);
+      page.pushOperators(pushGraphicsState(), concatTransformationMatrix(item.hs,0,0,1,item.x,item.y));
+      page.drawText(text, {x:0, y:0, size:item.size, font:gf, color:c(fg)});
+      page.pushOperators(popGraphicsState());
+      continue;
+    }
+    const useExact = !item.ov && canUseExact(item.info, text);
+    const match = await embedMatch({fam:item.info.fam, bold:E.w>=600, italic:E.it});
     let font = match, mapped = s => s;
     if(useExact){
       try{ font = await embedExact(item); const m=item.info.exact.map; mapped = s => [...s].map(ch=>String.fromCodePoint(m.get(ch))).join(""); }
