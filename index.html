@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PDF Text Editor</title>
+<style>
+@font-face{font-family:"M-Sans";src:url(fonts/LiberationSans-Regular.ttf);font-weight:400;font-style:normal}
+@font-face{font-family:"M-Sans";src:url(fonts/LiberationSans-Bold.ttf);font-weight:700;font-style:normal}
+@font-face{font-family:"M-Sans";src:url(fonts/LiberationSans-Italic.ttf);font-weight:400;font-style:italic}
+@font-face{font-family:"M-Sans";src:url(fonts/LiberationSans-BoldItalic.ttf);font-weight:700;font-style:italic}
+@font-face{font-family:"M-Serif";src:url(fonts/LiberationSerif-Regular.ttf);font-weight:400;font-style:normal}
+@font-face{font-family:"M-Serif";src:url(fonts/LiberationSerif-Bold.ttf);font-weight:700;font-style:normal}
+@font-face{font-family:"M-Serif";src:url(fonts/LiberationSerif-Italic.ttf);font-weight:400;font-style:italic}
+@font-face{font-family:"M-Serif";src:url(fonts/LiberationSerif-BoldItalic.ttf);font-weight:700;font-style:italic}
+@font-face{font-family:"M-Mono";src:url(fonts/LiberationMono-Regular.ttf);font-weight:400;font-style:normal}
+@font-face{font-family:"M-Mono";src:url(fonts/LiberationMono-Bold.ttf);font-weight:700;font-style:normal}
+@font-face{font-family:"M-Mono";src:url(fonts/LiberationMono-Italic.ttf);font-weight:400;font-style:italic}
+@font-face{font-family:"M-Mono";src:url(fonts/LiberationMono-BoldItalic.ttf);font-weight:700;font-style:italic}
+@font-face{font-family:"M-Carlito";src:url(fonts/Carlito-Regular.ttf);font-weight:400;font-style:normal}
+@font-face{font-family:"M-Carlito";src:url(fonts/Carlito-Bold.ttf);font-weight:700;font-style:normal}
+@font-face{font-family:"M-Carlito";src:url(fonts/Carlito-Italic.ttf);font-weight:400;font-style:italic}
+@font-face{font-family:"M-Carlito";src:url(fonts/Carlito-BoldItalic.ttf);font-weight:700;font-style:italic}
+@font-face{font-family:"M-Caladea";src:url(fonts/Caladea-Regular.ttf);font-weight:400;font-style:normal}
+@font-face{font-family:"M-Caladea";src:url(fonts/Caladea-Bold.ttf);font-weight:700;font-style:normal}
+@font-face{font-family:"M-Caladea";src:url(fonts/Caladea-Italic.ttf);font-weight:400;font-style:italic}
+@font-face{font-family:"M-Caladea";src:url(fonts/Caladea-BoldItalic.ttf);font-weight:700;font-style:italic}
+
+:root{
+  --bg:#eceae6; --panel:#ffffff; --ink:#1d1d1f; --muted:#6b6b70; --line:#d9d6d0;
+  --accent:#2e5bff; --accent-soft:rgba(46,91,255,.12); --danger:#c4332b;
+}
+@media (prefers-color-scheme: dark){
+  :root{--bg:#18181a; --panel:#242427; --ink:#f2f2f3; --muted:#a0a0a8; --line:#3a3a3f; --accent:#7b97ff; --accent-soft:rgba(123,151,255,.18); --danger:#ff6b61;}
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{position:sticky;top:0;z-index:50;background:var(--panel);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:10px;padding:10px 16px;flex-wrap:wrap}
+header h1{font-size:15px;margin:0 8px 0 0;font-weight:650;letter-spacing:-.01em}
+.btn{appearance:none;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:8px;
+  padding:7px 12px;font:inherit;font-weight:550;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{filter:brightness(1.07)}
+.btn:disabled{opacity:.45;cursor:default;filter:none}
+.btn.danger{color:var(--danger)}
+.spacer{flex:1}
+#status{color:var(--muted);font-size:13px}
+#fileName{font-weight:550;max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+main{padding:24px 16px 80px;display:flex;flex-direction:column;align-items:center;gap:22px}
+#drop{width:min(640px,100%);margin-top:6vh;border:2px dashed var(--line);border-radius:16px;background:var(--panel);
+  padding:56px 24px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s}
+#drop.over{border-color:var(--accent);background:var(--accent-soft)}
+#drop h2{margin:0 0 6px;font-size:20px;letter-spacing:-.01em}
+#drop p{margin:4px 0;color:var(--muted)}
+#drop .how{margin:22px auto 0;text-align:left;max-width:420px;color:var(--muted);font-size:13px}
+#drop .how li{margin:3px 0}
+.page{position:relative;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.12),0 8px 24px rgba(0,0,0,.08)}
+.page canvas{display:block}
+.layer{position:absolute;inset:0}
+.ti{position:absolute;white-space:pre;cursor:text;color:transparent;border-radius:2px;outline:none;
+  transform-origin:0 0;padding:0;margin:0}
+.ti:hover{background:var(--accent-soft);box-shadow:0 0 0 1px rgba(46,91,255,.35)}
+.ti.edited,.ti.editing{color:var(--tc);background:var(--bgc)}
+.ti.edited:hover{box-shadow:0 0 0 1px rgba(46,91,255,.5)}
+.ti.editing{box-shadow:0 0 0 1.5px var(--accent);z-index:5;cursor:text}
+.pnum{position:absolute;left:0;bottom:-20px;font-size:11px;color:var(--muted)}
+#bar{position:absolute;z-index:60;display:none;background:var(--panel);border:1px solid var(--line);border-radius:10px;
+  box-shadow:0 6px 20px rgba(0,0,0,.18);padding:5px;gap:4px;align-items:center;font-size:12px;white-space:nowrap}
+#bar .btn{padding:4px 9px;font-size:12px;border-radius:6px}
+#bar .font{color:var(--muted);padding:0 6px 0 4px}
+#bar .font b{color:var(--ink);font-weight:600}
+#lib{width:min(640px,100%);background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px 20px}
+#lib h3{margin:0;font-size:15px}
+#lib .top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+#lib .note{color:var(--muted);font-size:12.5px;margin:8px 0 0}
+.doc{display:flex;align-items:center;gap:8px;padding:9px 0;border-top:1px solid var(--line)}
+.doc .meta{flex:1;min-width:0}
+.doc .nm{font-weight:550;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.doc .sub{color:var(--muted);font-size:12px}
+.doc .btn{padding:5px 10px;font-size:12.5px}
+#saveState{font-size:12px;color:var(--muted)}
+#toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:var(--panel);
+  padding:9px 14px;border-radius:9px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:100;max-width:90vw}
+#toast.show{opacity:1}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<header>
+  <h1>PDF Text Editor</h1>
+  <button class="btn" id="homeBtn">My documents</button>
+  <button class="btn" id="openBtn">Open PDF</button>
+  <span id="fileName"></span>
+  <span id="status"></span>
+  <span id="saveState"></span>
+  <span class="spacer"></span>
+  <button class="btn danger hidden" id="resetBtn">Undo all edits</button>
+  <button class="btn primary" id="dlBtn" disabled>Download PDF</button>
+  <input type="file" id="file" accept="application/pdf,.pdf" hidden>
+  <input type="file" id="importFile" accept=".json,application/json" hidden>
+</header>
+<main id="main">
+  <div id="drop">
+    <h2>Drop a PDF here</h2>
+    <p>or click to choose a file. Everything stays in your browser.</p>
+    <ol class="how">
+      <li>Click any text on the page to edit it.</li>
+      <li>Change or delete words. Press Enter or click away when done.</li>
+      <li>Use <b>Remove</b> to delete a whole line of text.</li>
+      <li>Click <b>Download PDF</b> to save the edited file.</li>
+    </ol>
+  </div>
+  <section id="lib">
+    <div class="top">
+      <h3>My documents</h3><span class="spacer"></span>
+      <button class="btn" id="exportBtn">Export backup</button>
+      <button class="btn" id="importBtn">Restore backup</button>
+    </div>
+    <div id="docList"></div>
+    <p class="note" id="libNote">PDFs you open and every edit are saved automatically in this browser. Use <b>Export backup</b> now and then to keep a copy (for example in Google Drive) or to move your documents to another device.</p>
+  </section>
+</main>
+<div id="bar">
+  <span class="font" id="barFont"></span>
+  <button class="btn danger" id="barRemove">Remove</button>
+  <button class="btn" id="barRestore">Restore</button>
+</div>
+<div id="toast"></div>
+
+<script src="lib/pdf.min.js"></script>
+<script src="lib/pdf-lib.min.js"></script>
+<script src="lib/fontkit.umd.min.js"></script>
+<script>
+(() => {
+"use strict";
+pdfjsLib.GlobalWorkerOptions.workerSrc = new URL("lib/pdf.worker.min.js", location.href).href;
+
+// Bundled metric-compatible fonts. a/d = hhea ascent/descent as fraction of em.
+const FAMILIES = {
+  Carlito: {css:"M-Carlito", file:"Carlito", a:.952, d:.269, sty:["Regular","Bold","Italic","BoldItalic"], label:"Calibri", noSubset:true},
+  Caladea: {css:"M-Caladea", file:"Caladea", a:.900, d:.250, sty:["Regular","Bold","Italic","BoldItalic"], label:"Cambria", noSubset:true},
+  Sans:    {css:"M-Sans", file:"LiberationSans", a:.905, d:.212, sty:["Regular","Bold","Italic","BoldItalic"], label:"Arial / Helvetica"},
+  Serif:   {css:"M-Serif", file:"LiberationSerif", a:.891, d:.216, sty:["Regular","Bold","Italic","BoldItalic"], label:"Times"},
+  Mono:    {css:"M-Mono", file:"LiberationMono", a:.833, d:.300, sty:["Regular","Bold","Italic","BoldItalic"], label:"Courier"},
+};
+
+const $ = id => document.getElementById(id);
+const main = $("main"), drop = $("drop"), fileInput = $("file"), bar = $("bar");
+let state = null;       // {name, bytes, pdf, pages:[{page, vp, canvas, items:[]}]}
+let active = null;      // item being edited
+const fontCache = new Map(); // fontName -> font info
+
+function toast(msg, ms=2600){
+  const t=$("toast"); t.textContent=msg; t.classList.add("show");
+  clearTimeout(toast._t); toast._t=setTimeout(()=>t.classList.remove("show"),ms);
+}
+function setStatus(s){ $("status").textContent = s; }
+
+// ---------- Saved documents (IndexedDB) ----------
+const DB = (() => {
+  let dbp = null;
+  function open(){
+    if(dbp) return dbp;
+    dbp = new Promise((res, rej) => {
+      let r; try{ r = indexedDB.open("pdf-text-editor", 1); }catch(e){ rej(e); return; }
+      r.onupgradeneeded = () => { const d=r.result; if(!d.objectStoreNames.contains("docs")) d.createObjectStore("docs",{keyPath:"id"}); };
+      r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error);
+    });
+    dbp.catch(()=>{ dbp=null; });
+    return dbp;
+  }
+  async function tx(mode, fn){
+    const d = await open();
+    return new Promise((res, rej) => {
+      const t = d.transaction("docs", mode), st = t.objectStore("docs");
+      let out; const q = fn(st); if(q) q.onsuccess = () => { out = q.result; };
+      t.oncomplete = () => res(out); t.onerror = () => rej(t.error); t.onabort = () => rej(t.error);
+    });
+  }
+  return {
+    put: doc => tx("readwrite", st => st.put(doc)),
+    get: id => tx("readonly", st => st.get(id)),
+    del: id => tx("readwrite", st => st.delete(id)),
+    all: () => tx("readonly", st => st.getAll()),
+  };
+})();
+let storageOK = true;
+try{ navigator.storage?.persist?.().catch(()=>{}); }catch(e){}
+
+function newId(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,8); }
+function fmtDate(t){ try{ return new Date(t).toLocaleString(undefined,{dateStyle:"medium",timeStyle:"short"}); }catch(e){ return ""; } }
+function fmtSize(n){ return n>1048576 ? (n/1048576).toFixed(1)+" MB" : Math.max(1,Math.round(n/1024))+" KB"; }
+
+let saveTimer = null;
+function scheduleSave(){
+  if(!state?.docId || !storageOK) return;
+  $("saveState").textContent = "Saving…";
+  clearTimeout(saveTimer); saveTimer = setTimeout(saveNow, 400);
+}
+async function saveNow(){
+  if(!state?.docId) return;
+  const edits = allEdits().map(i => ({k:i.key, str:i.str, text:i.text}));
+  try{
+    const doc = await DB.get(state.docId);
+    if(!doc) return;
+    doc.edits = edits; doc.updated = Date.now();
+    await DB.put(doc);
+    $("saveState").textContent = "All changes saved";
+  }catch(e){
+    console.error(e);
+    $("saveState").textContent = "Not saved";
+    toast("Couldn't save to this browser. Download the PDF to keep your edits.", 5000);
+  }
+}
+addEventListener("beforeunload", () => { if(saveTimer){ clearTimeout(saveTimer); saveNow(); } });
+document.addEventListener("visibilitychange", () => { if(document.hidden && saveTimer){ clearTimeout(saveTimer); saveTimer=null; saveNow(); } });
+
+async function renderLibrary(){
+  const list = $("docList");
+  let docs;
+  try{ docs = await DB.all(); }
+  catch(e){
+    storageOK = false;
+    list.innerHTML = `<p class="note">Saving isn't available in this browser view (private mode or embedded preview). You can still edit and download.</p>`;
+    $("exportBtn").disabled = $("importBtn").disabled = true;
+    return;
+  }
+  docs.sort((a,b)=>b.updated-a.updated);
+  if(!docs.length){ list.innerHTML = `<p class="note" style="margin:0">No saved documents yet. Open a PDF to get started.</p>`; return; }
+  list.innerHTML = "";
+  for(const d of docs){
+    const row = document.createElement("div"); row.className="doc";
+    const n = d.edits?.length||0;
+    row.innerHTML = `<div class="meta"><div class="nm"></div><div class="sub">${n} edit${n===1?"":"s"} · ${fmtSize(d.bytes?.byteLength||0)} · ${fmtDate(d.updated)}</div></div>`;
+    row.querySelector(".nm").textContent = d.name;
+    const openB = document.createElement("button"); openB.className="btn primary"; openB.textContent="Open";
+    openB.onclick = () => openSaved(d.id);
+    const delB = document.createElement("button"); delB.className="btn danger"; delB.textContent="Delete";
+    delB.onclick = async () => {
+      if(delB.dataset.armed){ try{ await DB.del(d.id); toast("Deleted "+d.name); }catch(e){ toast("Couldn't delete."); } renderLibrary(); return; }
+      delB.dataset.armed = "1"; delB.textContent = "Confirm delete";
+      setTimeout(()=>{ if(delB.isConnected){ delete delB.dataset.armed; delB.textContent="Delete"; } }, 4000);
+    };
+    row.append(openB, delB);
+    list.appendChild(row);
+  }
+}
+
+async function openSaved(id){
+  try{
+    const d = await DB.get(id);
+    if(!d){ toast("That document is gone."); renderLibrary(); return; }
+    await loadFile(new File([d.bytes], d.name, {type:"application/pdf"}), {docId:d.id, edits:d.edits||[]});
+  }catch(e){ console.error(e); toast("Couldn't open the saved document."); }
+}
+
+function goHome(){
+  finishEdit();
+  if(saveTimer){ clearTimeout(saveTimer); saveTimer=null; saveNow(); }
+  state = null; active = null;
+  document.querySelectorAll(".page").forEach(p=>p.remove());
+  drop.classList.remove("hidden"); $("lib").classList.remove("hidden");
+  $("fileName").textContent = ""; setStatus(""); $("saveState").textContent = "";
+  $("dlBtn").disabled = true; $("resetBtn").classList.add("hidden"); $("dlBtn").textContent = "Download PDF";
+  renderLibrary();
+}
+$("homeBtn").onclick = goHome;
+
+// Backup: one JSON file holding every saved PDF and its edits.
+function b64(u8){ let s=""; const C=0x8000; for(let i=0;i<u8.length;i+=C) s+=String.fromCharCode.apply(null,u8.subarray(i,i+C)); return btoa(s); }
+function unb64(s){ const bin=atob(s); const u=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i); return u; }
+$("exportBtn").onclick = async () => {
+  try{
+    const docs = await DB.all();
+    if(!docs.length){ toast("Nothing to back up yet."); return; }
+    const data = JSON.stringify({app:"pdf-text-editor", version:1, exported:Date.now(),
+      docs: docs.map(d=>({id:d.id, name:d.name, created:d.created, updated:d.updated, edits:d.edits||[], pdf:b64(new Uint8Array(d.bytes))}))});
+    const n0=new Date(), day=`${n0.getFullYear()}-${String(n0.getMonth()+1).padStart(2,"0")}-${String(n0.getDate()).padStart(2,"0")}`;
+    await saveFile(`pdf-editor-backup-${day}.json`, new Blob([data],{type:"application/json"}));
+  }catch(e){ console.error(e); toast("Backup failed."); }
+};
+$("importBtn").onclick = () => $("importFile").click();
+$("importFile").onchange = async e => {
+  const f = e.target.files[0]; e.target.value = "";
+  if(!f) return;
+  try{
+    const j = JSON.parse(await f.text());
+    if(j.app!=="pdf-text-editor" || !Array.isArray(j.docs)) throw new Error("not a backup");
+    let n=0;
+    for(const d of j.docs){
+      const bytes = unb64(d.pdf);
+      await DB.put({id:d.id||newId(), name:d.name||"document.pdf", created:d.created||Date.now(), updated:d.updated||Date.now(), edits:d.edits||[], bytes:bytes.buffer});
+      n++;
+    }
+    toast(`Restored ${n} document${n===1?"":"s"}.`);
+    renderLibrary();
+  }catch(err){ console.error(err); toast("That file isn't a valid backup."); }
+};
+
+async function saveFile(name, blob){
+  try{
+    const dl = window.claude ? await window.claude.use("downloads") : null;
+    if(dl){ await dl.save({filename:name, data:blob}); toast("Saved "+name); return; }
+  }catch(err){
+    if(err?.code==="declined"){ toast("Download cancelled"); return; }
+    if(err?.code==="rate_limited"){ toast("A save prompt is already open."); return; }
+  }
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href), 10000);
+}
+
+// ---------- File loading ----------
+$("openBtn").onclick = () => fileInput.click();
+drop.onclick = () => fileInput.click();
+fileInput.onchange = e => { const f=e.target.files[0]; if(f) loadFile(f); fileInput.value=""; };
+["dragenter","dragover"].forEach(ev=>document.addEventListener(ev,e=>{e.preventDefault(); drop.classList.add("over");}));
+["dragleave","drop"].forEach(ev=>document.addEventListener(ev,e=>{e.preventDefault(); if(ev==="drop"||e.target===drop) drop.classList.remove("over");}));
+document.addEventListener("drop", e => { const f=[...(e.dataTransfer?.files||[])].find(f=>/pdf$/i.test(f.type)||/\.pdf$/i.test(f.name)); if(f) loadFile(f); else if(e.dataTransfer?.files?.length) toast("That isn't a PDF file."); });
+
+async function loadFile(file, opts={}){
+  try{
+    finishEdit();
+    setStatus("Opening…");
+    const bytes = new Uint8Array(await file.arrayBuffer());
+    const pdf = await pdfjsLib.getDocument({data: bytes.slice(), fontExtraProperties:true, isEvalSupported:false}).promise;
+    document.querySelectorAll(".page").forEach(p=>p.remove());
+    fontCache.clear();
+    drop.classList.add("hidden"); $("lib").classList.add("hidden");
+    let docId = opts.docId || null;
+    if(!docId && storageOK){
+      docId = newId();
+      try{ await DB.put({id:docId, name:file.name, created:Date.now(), updated:Date.now(), edits:[], bytes:bytes.slice().buffer}); $("saveState").textContent="Saved to My documents"; }
+      catch(e){ docId = null; storageOK = false; $("saveState").textContent="Not saved (storage unavailable)"; }
+    }
+    state = {name:file.name, bytes, pdf, pages:[], docId};
+    $("fileName").textContent = file.name;
+    $("dlBtn").disabled = false;
+    updateCount();
+    const avail = Math.min(main.clientWidth - 32, 1100);
+    for(let i=1;i<=pdf.numPages;i++){
+      setStatus(`Rendering page ${i} of ${pdf.numPages}…`);
+      await renderPage(i, avail);
+    }
+    setStatus(`${pdf.numPages} page${pdf.numPages>1?"s":""}`);
+    if(opts.edits?.length) applySavedEdits(opts.edits);
+    updateCount();
+  }catch(err){
+    console.error(err);
+    setStatus("");
+    toast(err?.name==="PasswordException" ? "This PDF is password protected." : "Couldn't open that PDF.");
+  }
+}
+
+async function renderPage(num, avail){
+  const page = await state.pdf.getPage(num);
+  const base = page.getViewport({scale:1});
+  const scale = Math.min(avail / base.width, 1.6);
+  const vp = page.getViewport({scale});
+  const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+  const wrap = document.createElement("div");
+  wrap.className = "page";
+  wrap.style.width = vp.width+"px"; wrap.style.height = vp.height+"px";
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.floor(vp.width*dpr); canvas.height = Math.floor(vp.height*dpr);
+  canvas.style.width = vp.width+"px"; canvas.style.height = vp.height+"px";
+  const layer = document.createElement("div"); layer.className="layer";
+  const pn = document.createElement("div"); pn.className="pnum"; pn.textContent = `Page ${num}`;
+  wrap.append(canvas, layer, pn);
+  main.appendChild(wrap);
+  const ctx = canvas.getContext("2d", {willReadFrequently:true});
+  await page.render({canvasContext:ctx, viewport:vp, transform: dpr!==1?[dpr,0,0,dpr,0,0]:null}).promise;
+  const tc = await page.getTextContent();
+  const pg = {num, page, vp, dpr, canvas, ctx, layer, items:[]};
+  state.pages.push(pg);
+  tc.items.forEach((it, idx) => {
+    if(!it.str || !it.str.trim() || !it.transform) return;
+    const t = it.transform;
+    // Only horizontal, upright text is editable.
+    if(Math.abs(t[1])>1e-3 || Math.abs(t[2])>1e-3 || t[0]<=0 || t[3]<=0) return;
+    const style = tc.styles[it.fontName] || {};
+    const size = t[3], hs = t[0]/t[3];
+    const width = it.width;
+    if(!(width>0) || !(size>0)) return;
+    const asc = Math.max(style.ascent || .8, .75), desc = style.descent ? style.descent : -.2;
+    const info = getFontInfo(page, it.fontName);
+    const item = {pg, key:`${num}:${idx}`, str:it.str, text:it.str, fontName:it.fontName, info,
+      x:t[4], y:t[5], size, hs, width, asc, desc: Math.min(desc,0), edited:false};
+    buildItem(item);
+    pg.items.push(item);
+  });
+}
+
+function applySavedEdits(edits){
+  const byKey = new Map(state.pages.flatMap(p=>p.items).map(i=>[i.key,i]));
+  let missed = 0;
+  for(const e of edits){
+    const it = byKey.get(e.k);
+    if(!it || it.str!==e.str){ missed++; continue; }
+    applyCover(it);
+    it.text = e.text; it.el.textContent = e.text; it.edited = e.text!==it.str;
+    it.el.classList.toggle("edited", it.edited);
+  }
+  if(missed) toast(`${missed} saved edit${missed>1?"s":""} couldn't be matched to the page.`, 4000);
+  $("saveState").textContent = "All changes saved";
+}
+
+// ---------- Font analysis ----------
+function getFontInfo(page, fontName){
+  if(fontCache.has(fontName)) return fontCache.get(fontName);
+  let f = null;
+  try{ if(page.commonObjs.has(fontName)) f = page.commonObjs.get(fontName); }catch(e){}
+  const raw = (f?.name || "").replace(/^[A-Z]{6}\+/, "");
+  const lname = raw.toLowerCase().replace(/[\s_-]/g,"");
+  const bold = !!(f?.bold || f?.black) || /bold|black|heavy|semibold|demi/.test(lname);
+  const italic = !!f?.italic || /italic|oblique/.test(lname);
+  let fam;
+  if(/calibri|carlito/.test(lname)) fam="Carlito";
+  else if(/cambria|caladea/.test(lname)) fam="Caladea";
+  else if(/courier|mono|consolas|cousine|menlo|typewriter/.test(lname) || f?.isMonospace) fam="Mono";
+  else if(/times|serif|georgia|garamond|tinos|minion|palatino|book|roman|cmr|nimbusrom/.test(lname) && !/sans/.test(lname)) fam="Serif";
+  else if(/arial|helvetica|arimo|sans|verdana|tahoma|segoe|roboto|open|lato|inter|nimbussan/.test(lname)) fam="Sans";
+  else fam = f?.isSerifFont ? "Serif" : "Sans";
+  const prettyName = raw.replace(/[,-](Bold|Italic|Regular|BoldItalic|Oblique|BoldOblique|MT|PSMT)+$/i,"").replace(/(PSMT|MT)$/,"") || FAMILIES[fam].label;
+
+  // Map unicode char -> character code inside pdf.js's rebuilt copy of the embedded font.
+  let exact = null;
+  if(f && f.data && !f.missingFile && !f.isType3Font && f.toFontChar){
+    try{
+      const map = new Map();
+      const tu = f.toUnicode;
+      const tfc = f.toFontChar;
+      const put = (code, u) => {
+        if(typeof u !== "string" || [...u].length!==1) return;
+        const fc = tfc[code];
+        if(typeof fc === "number" && !map.has(u)) map.set(u, fc);
+      };
+      if(tu && tu._map){ const m=tu._map; for(const k in m) put(+k, m[k]); }
+      else if(tu && typeof tu.firstChar==="number"){ for(let c=tu.firstChar;c<=tu.lastChar;c++) put(c, String.fromCharCode(c)); }
+      if(map.size){
+        const fk = fontkit.create(f.data instanceof Uint8Array ? f.data : new Uint8Array(f.data));
+        for(const [u,fc] of [...map]){ if(!fk.hasGlyphForCodePoint(fc)) map.delete(u); }
+        if(map.size) exact = {data: f.data, map};
+      }
+    }catch(e){ exact = null; }
+  }
+  const info = {fam, bold, italic, prettyName, exact, css: FAMILIES[fam].css};
+  fontCache.set(fontName, info);
+  return info;
+}
+
+function canUseExact(info, text){
+  if(!info.exact) return false;
+  for(const ch of text){ if(ch===" ") continue; if(!info.exact.map.has(ch)) return false; }
+  return true;
+}
+
+// ---------- Colour sampling from the rendered page ----------
+function pxRect(item){
+  const {pg} = item;
+  const r = pg.vp.convertToViewportRectangle([item.x, item.y + item.desc*item.size, item.x+item.width, item.y + item.asc*item.size]);
+  return {l:Math.min(r[0],r[2]), t:Math.min(r[1],r[3]), r:Math.max(r[0],r[2]), b:Math.max(r[1],r[3])};
+}
+function sampleColors(item){
+  const {pg} = item, d = pg.dpr, R = pxRect(item);
+  const W = pg.canvas.width, H = pg.canvas.height;
+  const x0 = Math.max(0, Math.floor(R.l*d)-3), y0 = Math.max(0, Math.floor(R.t*d)-3);
+  const x1 = Math.min(W, Math.ceil(R.r*d)+3), y1 = Math.min(H, Math.ceil(R.b*d)+3);
+  const w = x1-x0, h = y1-y0;
+  if(w<=0||h<=0) return {bg:[255,255,255], fg:[0,0,0]};
+  const data = pg.ctx.getImageData(x0,y0,w,h).data;
+  const counts = new Map();
+  const at = (x,y)=>{ const i=(y*w+x)*4; return [data[i],data[i+1],data[i+2]]; };
+  const vote = (c)=>{ const k=(c[0]>>3)<<10|(c[1]>>3)<<5|(c[2]>>3); const e=counts.get(k); if(e){e.n++;e.s[0]+=c[0];e.s[1]+=c[1];e.s[2]+=c[2];} else counts.set(k,{n:1,s:[...c]}); };
+  // Background = most common colour inside the text box (text pixels are a minority).
+  const step = Math.max(1, Math.floor(Math.sqrt(w*h/40000)));
+  for(let y=3;y<h-3;y+=step) for(let x=3;x<w-3;x+=step) vote(at(x,y));
+  if(!counts.size) for(let x=0;x<w;x++){ vote(at(x,0)); vote(at(x,h-1)); }
+  let best=null; for(const v of counts.values()) if(!best||v.n>best.n) best=v;
+  const bg = best.s.map(s=>Math.round(s/best.n));
+  let far=0, fg=[0,0,0];
+  for(let y=2;y<h-2;y++) for(let x=2;x<w-2;x++){
+    const c=at(x,y); const dd=Math.abs(c[0]-bg[0])+Math.abs(c[1]-bg[1])+Math.abs(c[2]-bg[2]);
+    if(dd>far){far=dd; fg=c;}
+  }
+  return {bg, fg};
+}
+
+// ---------- Overlay items ----------
+function buildItem(item){
+  const el = document.createElement("span");
+  el.className = "ti";
+  el.spellcheck = false;
+  item.el = el;
+  layoutItem(item);
+  el.textContent = item.text;
+  el.addEventListener("mousedown", e => { if(active!==item){ e.preventDefault(); startEdit(item, e); } });
+  el.addEventListener("keydown", e => {
+    if(e.key==="Enter"){ e.preventDefault(); finishEdit(); }
+    else if(e.key==="Escape"){ e.preventDefault(); el.textContent = item.text; finishEdit(); }
+  });
+  el.addEventListener("paste", e => {
+    e.preventDefault();
+    const t = (e.clipboardData?.getData("text/plain")||"").replace(/[\r\n\t]+/g," ");
+    document.execCommand("insertText", false, t);
+  });
+  el.addEventListener("input", () => updateBarFont(item));
+  item.pg.layer.appendChild(el);
+}
+
+function layoutItem(item){
+  const {el, pg, info} = item, sc = pg.vp.scale, F = FAMILIES[info.fam];
+  const R = pxRect(item);
+  const fpx = item.size*sc;
+  // Line box = font's own ascent+descent so the CSS baseline lands on the PDF baseline.
+  const baseY = pg.vp.convertToViewportPoint(item.x, item.y)[1];
+  el.style.fontFamily = `"${F.css}", ${info.fam==="Serif"||info.fam==="Caladea"?"serif":info.fam==="Mono"?"monospace":"sans-serif"}`;
+  el.style.fontWeight = info.bold?700:400;
+  el.style.fontStyle = info.italic?"italic":"normal";
+  el.style.fontSize = fpx+"px";
+  el.style.lineHeight = ((F.a+F.d)*fpx)+"px";
+  el.style.height = ((F.a+F.d)*fpx)+"px";
+  el.style.left = R.l+"px";
+  el.style.top = (baseY - F.a*fpx)+"px";
+  el.style.minWidth = ((R.r-R.l)/item.hs)+"px";
+  el.style.transform = item.hs!==1 ? `scaleX(${item.hs})` : "";
+  // The original glyphs may extend a bit further than the CSS line box; cover the whole original area.
+  const extraTop = Math.max(0,(baseY - F.a*fpx) - R.t), extraBot = Math.max(0, R.b - (baseY + F.d*fpx));
+  el.style.boxShadow = "";
+  el.dataset.padt = extraTop; el.dataset.padb = extraBot;
+}
+
+function applyCover(item){
+  if(!item.colors) item.colors = sampleColors(item);
+  const {bg, fg} = item.colors;
+  item.el.style.setProperty("--bgc", `rgb(${bg})`);
+  item.el.style.setProperty("--tc", `rgb(${fg})`);
+}
+
+function startEdit(item, ev){
+  finishEdit();
+  active = item;
+  applyCover(item);
+  const el = item.el;
+  el.classList.add("editing");
+  el.contentEditable = "plaintext-only";
+  if(el.contentEditable !== "plaintext-only") el.contentEditable = "true";
+  el.focus();
+  // Put caret where the user clicked.
+  let range = null;
+  if(ev && document.caretRangeFromPoint) range = document.caretRangeFromPoint(ev.clientX, ev.clientY);
+  else if(ev && document.caretPositionFromPoint){ const p=document.caretPositionFromPoint(ev.clientX, ev.clientY); if(p){ range=document.createRange(); range.setStart(p.offsetNode,p.offset);} }
+  const sel = getSelection(); sel.removeAllRanges();
+  if(range && el.contains(range.startContainer)){ range.collapse(true); sel.addRange(range); }
+  else { const r=document.createRange(); r.selectNodeContents(el); r.collapse(false); sel.addRange(r); }
+  showBar(item);
+}
+
+function finishEdit(){
+  if(!active) return;
+  const item = active; active = null;
+  const el = item.el;
+  el.contentEditable = "false";
+  el.classList.remove("editing");
+  const txt = el.textContent.replace(/[\r\n]+/g," ");
+  item.text = txt;
+  item.edited = txt !== item.str;
+  el.classList.toggle("edited", item.edited);
+  hideBar();
+  updateCount();
+  scheduleSave();
+}
+
+document.addEventListener("mousedown", e => {
+  if(!active) return;
+  if(e.target===active.el || bar.contains(e.target)) return;
+  finishEdit();
+});
+
+// ---------- Floating bar ----------
+function showBar(item){
+  updateBarFont(item);
+  bar.style.display = "flex";
+  positionBar();
+}
+function positionBar(){
+  if(!active) return;
+  const r = active.el.getBoundingClientRect();
+  const bw = bar.offsetWidth, bh = bar.offsetHeight;
+  let left = r.left + scrollX;
+  left = Math.max(8+scrollX, Math.min(left, scrollX + innerWidth - bw - 8));
+  let top = r.top + scrollY - bh - 8;
+  if(r.top - bh - 8 < 64) top = r.bottom + scrollY + 8;
+  bar.style.left = left+"px"; bar.style.top = top+"px";
+}
+function updateBarFont(item){
+  const txt = item.el.textContent;
+  const exact = canUseExact(item.info, txt);
+  const F = FAMILIES[item.info.fam];
+  const w = (item.info.bold?" Bold":"")+(item.info.italic?" Italic":"");
+  $("barFont").innerHTML = exact
+    ? `Font: <b>${esc(item.info.prettyName)}${w}</b> (original)`
+    : `Font: <b>${esc(item.info.prettyName)}${w}</b>${item.info.exact?" · new letters use a close match":" · close match"}`;
+  $("barFont").title = exact ? "Uses the font embedded in this PDF." : `Uses ${F.file.replace("Liberation","Liberation ")} (same letter widths as ${F.label}) because the PDF only contains the letters it already used.`;
+  requestAnimationFrame(positionBar);
+}
+function hideBar(){ bar.style.display="none"; }
+bar.addEventListener("mousedown", e => e.preventDefault());
+$("barRemove").onclick = () => { if(!active) return; active.el.textContent=""; finishEdit(); toast("Text removed"); };
+$("barRestore").onclick = () => { if(!active) return; active.el.textContent=active.str; finishEdit(); };
+addEventListener("scroll", positionBar, {passive:true});
+addEventListener("resize", positionBar);
+
+function esc(s){ return s.replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+function allEdits(){ return state ? state.pages.flatMap(p=>p.items.filter(i=>i.edited)) : []; }
+function updateCount(){
+  const n = allEdits().length;
+  $("resetBtn").classList.toggle("hidden", n===0);
+  $("dlBtn").textContent = n ? `Download PDF (${n} edit${n>1?"s":""})` : "Download PDF";
+}
+$("resetBtn").onclick = () => {
+  finishEdit();
+  for(const it of allEdits()){ it.text=it.str; it.el.textContent=it.str; it.edited=false; it.el.classList.remove("edited"); }
+  updateCount();
+  scheduleSave();
+};
+
+// ---------- Export ----------
+const fileCache = new Map();
+async function loadBundled(fam, bold, italic){
+  const F = FAMILIES[fam];
+  const sty = bold&&italic?"BoldItalic":bold?"Bold":italic?"Italic":"Regular";
+  const url = `fonts/${F.file}-${sty}.ttf`;
+  if(!fileCache.has(url)) fileCache.set(url, fetch(url).then(r=>{ if(!r.ok) throw new Error("font"); return r.arrayBuffer(); }));
+  return fileCache.get(url);
+}
+function standardFont(fam, bold, italic){
+  const S = PDFLib.StandardFonts;
+  if(fam==="Serif"||fam==="Caladea") return bold&&italic?S.TimesRomanBoldItalic:bold?S.TimesRomanBold:italic?S.TimesRomanItalic:S.TimesRoman;
+  if(fam==="Mono") return bold&&italic?S.CourierBoldOblique:bold?S.CourierBold:italic?S.CourierOblique:S.Courier;
+  return bold&&italic?S.HelveticaBoldOblique:bold?S.HelveticaBold:italic?S.HelveticaOblique:S.Helvetica;
+}
+
+async function buildPdf(){
+  const {PDFDocument, rgb, pushGraphicsState, popGraphicsState, concatTransformationMatrix} = PDFLib;
+  const doc = await PDFDocument.load(state.bytes, {ignoreEncryption:true, updateMetadata:false});
+  doc.registerFontkit(fontkit);
+  const pages = doc.getPages();
+  const embedded = new Map();
+  const embedExact = async (item) => {
+    const k = "x:"+item.fontName;
+    if(!embedded.has(k)) embedded.set(k, doc.embedFont(item.info.exact.data, {subset:false}));
+    return embedded.get(k);
+  };
+  const embedMatch = async (info) => {
+    const k = `m:${info.fam}:${info.bold}:${info.italic}`;
+    if(!embedded.has(k)) embedded.set(k, (async()=>{
+      try{ return await doc.embedFont(await loadBundled(info.fam, info.bold, info.italic), {subset: !FAMILIES[info.fam].noSubset}); }
+      catch(e){ return await doc.embedFont(standardFont(info.fam, info.bold, info.italic)); }
+    })());
+    return embedded.get(k);
+  };
+
+  for(const item of allEdits()){
+    const page = pages[item.pg.num-1];
+    if(!item.colors) item.colors = sampleColors(item);
+    const {bg, fg} = item.colors;
+    const c = a => rgb(a[0]/255, a[1]/255, a[2]/255);
+    // 1) Cover the original words with the background colour.
+    const loose = !item.info.exact; // non-embedded fonts are drawn with substitutes by viewers
+    const padY = item.size*(loose?0.1:0.06), padX = item.size*(loose?0.12:0.04);
+    page.drawRectangle({
+      x:item.x - padX, y:item.y + item.desc*item.size - padY,
+      width:item.width + padX*2, height:(item.asc - item.desc)*item.size + padY*2,
+      color:c(bg), borderWidth:0,
+    });
+    // 2) Write the new text at the same baseline, size and colour.
+    const text = item.text.replace(/\s+$/,"");
+    if(!text.trim()) continue;
+    const useExact = canUseExact(item.info, text);
+    const match = await embedMatch(item.info);
+    let font = match, mapped = s => s;
+    if(useExact){
+      try{ font = await embedExact(item); const m=item.info.exact.map; mapped = s => [...s].map(ch=>String.fromCodePoint(m.get(ch))).join(""); }
+      catch(e){ font = match; mapped = s=>s; }
+    }
+    const exactHasSpace = useExact && item.info.exact.map.has(" ");
+    const spaceW = (font===match || exactHasSpace) ? null : match.widthOfTextAtSize(" ", item.size);
+    page.pushOperators(pushGraphicsState(), concatTransformationMatrix(item.hs,0,0,1,item.x,item.y));
+    if(spaceW===null){
+      page.drawText(mapped(text), {x:0, y:0, size:item.size, font, color:c(fg)});
+    } else {
+      // Embedded font has no space glyph: draw word by word.
+      let x = 0;
+      for(const part of text.split(/( +)/)){
+        if(!part) continue;
+        if(part[0]===" "){ x += spaceW*part.length; continue; }
+        const s = mapped(part);
+        page.drawText(s, {x, y:0, size:item.size, font, color:c(fg)});
+        x += font.widthOfTextAtSize(s, item.size);
+      }
+    }
+    page.pushOperators(popGraphicsState());
+  }
+  return doc.save();
+}
+
+$("dlBtn").onclick = async () => {
+  if(!state) return;
+  finishEdit();
+  const btn = $("dlBtn"); btn.disabled = true; const label = btn.textContent; btn.textContent = "Preparing…";
+  let out;
+  try{ out = await buildPdf(); }
+  catch(err){ console.error(err); toast("Couldn't build the PDF: "+(err?.message||err), 5000); btn.disabled=false; btn.textContent=label; return; }
+  const name = state.name.replace(/\.pdf$/i,"") + "-edited.pdf";
+  const blob = new Blob([out], {type:"application/pdf"});
+  try{ await saveFile(name, blob); }
+  catch(err){ toast("Download isn't available here."); }
+  finally{ btn.disabled=false; updateCount(); }
+};
+
+renderLibrary();
+
+// Testing hook
+window.__pdfEditor = { get state(){return state;}, buildPdf, loadFile, startEdit, finishEdit, saveNow, DB };
+})();
+</script>
+</body>
+</html>
