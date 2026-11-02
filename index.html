@@ -58,8 +58,7 @@ header{background:var(--panel);border-bottom:1px solid var(--line);flex:none;z-i
 .spacer{flex:1}
 #fileName{font-weight:550;max-width:28vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #saveState{font-size:12px;color:var(--muted);white-space:nowrap}
-#zoomVal{width:64px;text-align:center;font:inherit;font-size:12.5px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);padding:4px;flex:none}
-.sigRow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px}
+#zoomVal{min-width:48px;text-align:center;font-size:12.5px;color:var(--muted);cursor:pointer;flex:none}
 #colorIn{width:30px;height:28px;border:1px solid var(--line);border-radius:6px;padding:2px;background:var(--panel);cursor:pointer;flex:none}
 #searchBar{display:flex;align-items:center;gap:6px;padding:6px 12px;border-top:1px solid var(--line);background:var(--panel);flex-wrap:wrap}
 #searchBar input[type=text]{border:1px solid var(--line);border-radius:7px;padding:6px 9px;background:var(--panel);color:var(--ink);font:inherit;width:200px;max-width:42vw}
@@ -90,7 +89,7 @@ header{background:var(--panel);border-bottom:1px solid var(--line);flex:none;z-i
 .page .layer,.page svg.ann,.page .nlayer{position:absolute;inset:0}
 .page svg.ann{overflow:visible;pointer-events:none}
 .page .nlayer{pointer-events:none}
-.page .nlayer .note,.page .nlayer .tb,.page .nlayer .selbox,.page .nlayer .field{pointer-events:auto}
+.page .nlayer .note,.page .nlayer .tb,.page .nlayer .selbox{pointer-events:auto}
 .page .pnum{position:absolute;left:0;bottom:-18px;font-size:11px;color:var(--muted)}
 .page .spin{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#999;font-size:12px}
 .ti,.tb{position:absolute;white-space:pre;cursor:text;color:transparent;border-radius:2px;outline:none;transform-origin:0 0;padding:0;margin:0}
@@ -157,36 +156,6 @@ header{background:var(--panel);border-bottom:1px solid var(--line);flex:none;z-i
 #toast.err{background:var(--danger);color:#fff}
 #busy{position:fixed;inset:0;z-index:95;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.25)}
 #busy div{background:var(--panel);padding:14px 18px;border-radius:12px;box-shadow:var(--shadow);font-weight:550}
-
-.seg{display:inline-flex;background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:2px;margin-right:4px}
-.seg button{border:0;background:transparent;padding:5px 14px;border-radius:7px;font-weight:600;cursor:pointer;color:var(--muted)}
-.seg button.on{background:var(--panel);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.15)}
-.seg button:disabled{cursor:default}
-.lbl2{font-size:12px;color:var(--muted);margin:0 4px 0 6px;white-space:nowrap}
-#signTools select{font:inherit;border:1px solid var(--line);border-radius:7px;padding:5px 6px;background:var(--panel);color:var(--ink);max-width:150px}
-#signTools .btn{padding:5px 10px;font-size:13px}
-.fbtn.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
-.field{position:absolute;border:1.5px dashed var(--fc);background:color-mix(in srgb, var(--fc) 10%, transparent);border-radius:4px;display:flex;align-items:center;overflow:hidden;font-size:11px;color:var(--fc);font-weight:600;padding:0 4px;white-space:nowrap;cursor:pointer}
-.field.filled{background:transparent;border-style:dotted}
-.field.signed{border-color:transparent;cursor:default}
-.field img{max-width:100%;max-height:100%;object-fit:contain;object-position:left center;pointer-events:none}
-.field .fv{color:#111;font-weight:400;font-family:"M-Sans",sans-serif}
-#pages:not(.t-sign) .field{pointer-events:none}
-#pages:not(.t-sign) .field:not(.filled){display:none}
-#pages.t-sign .nlayer .note,#pages.t-sign .nlayer .tb{pointer-events:none}
-#pages.placing .page{cursor:crosshair}
-.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:10px}
-.tabs button{border:0;background:none;padding:7px 12px;cursor:pointer;color:var(--muted);font-weight:600;border-bottom:2px solid transparent}
-.tabs button.on{color:var(--accent);border-bottom-color:var(--accent)}
-.sigpad{width:100%;height:170px;border:1px solid var(--line);border-radius:8px;background:#fff;touch-action:none;display:block}
-.sigrow{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}
-.saved{display:flex;flex-wrap:wrap;gap:8px}
-.saved .sv{border:1px solid var(--line);border-radius:8px;background:#fff;padding:6px;cursor:pointer;position:relative}
-.saved .sv img{height:46px;display:block}
-.saved .sv button{position:absolute;top:-8px;right:-8px;width:20px;height:20px;border-radius:10px;border:1px solid var(--line);background:var(--panel);cursor:pointer;font-size:11px;line-height:1;padding:0}
-.chk{display:flex;gap:8px;align-items:flex-start;font-size:13px;margin-top:12px}
-.log{font-size:13px}
-.log .ev{padding:8px 0;border-top:1px solid var(--line)}
 @media (max-width: 820px){
   #side{position:absolute;left:0;top:0;bottom:0;z-index:25;transform:translateX(-100%);transition:transform .2s;box-shadow:var(--shadow)}
   #side.open{transform:none}
@@ -196,7 +165,7 @@ header{background:var(--panel);border-bottom:1px solid var(--line);flex:none;z-i
   .row1{gap:5px;padding:6px 8px}
   .row1 .btn{padding:6px 8px}
 }
-@media (max-width: 520px){ #saveState{display:none} #fileName{display:none} .seg button{padding:5px 9px} .row1{gap:3px;overflow-x:auto} .row1 .btn{padding:6px 7px} .row1 .ib{width:30px} }
+@media (max-width: 520px){ #saveState{display:none} #fileName{display:none} }
 @media (min-width: 821px){ #side.closed{display:none} }
 </style>
 </head>
@@ -206,7 +175,6 @@ header{background:var(--panel);border-bottom:1px solid var(--line);flex:none;z-i
   <div class="row1">
     <button class="ib" id="sideBtn" title="Show or hide pages" data-i="side"></button>
     <span class="brand">PDF Editor</span>
-    <div class="seg" id="modeSeg"><button id="modeEdit" class="on" disabled>Edit</button><button id="modeSign" disabled>Sign</button></div>
     <button class="btn" id="homeBtn" title="My documents"><span data-i="home"></span><span class="lt">My documents</span></button>
     <button class="btn" id="openBtn" title="Open a PDF"><span data-i="open"></span><span class="lt">Open</span></button>
     <span id="fileName"></span>
@@ -238,23 +206,8 @@ header{background:var(--panel);border-bottom:1px solid var(--line);flex:none;z-i
     <button class="ib" id="ocrBtn" title="Recognize text in scanned pages (OCR)" data-i="ocr"></button>
     <span class="sep"></span>
     <button class="ib" id="zoomOut" title="Zoom out (Ctrl+-)" data-i="minus"></button>
-    <input type="text" id="zoomVal" value="100%" list="zoomList" inputmode="numeric" title="Zoom: type a percentage (10% to 400%). 100% = fit to width. Ctrl+0 resets."><datalist id="zoomList"></datalist>
+    <span id="zoomVal" title="Fit width (Ctrl+0)">100%</span>
     <button class="ib" id="zoomIn" title="Zoom in (Ctrl+=)" data-i="plus"></button>
-  </div>
-  <div class="row2 hidden" id="signTools">
-    <span class="lbl2">Signer</span>
-    <select id="signerSel" title="Who is signing now"></select>
-    <button class="btn" id="addSigner">Add signer</button>
-    <span class="sep"></span>
-    <span class="lbl2">Add field</span>
-    <button class="btn fbtn" data-field="signature">Signature</button>
-    <button class="btn fbtn" data-field="initials">Initials</button>
-    <button class="btn fbtn" data-field="date">Date</button>
-    <button class="btn fbtn" data-field="name">Name</button>
-    <button class="btn fbtn" data-field="text">Text</button>
-    <span class="spacer"></span>
-    <button class="btn" id="signLogBtn">History</button>
-    <button class="btn primary" id="finishSign">Finish signing</button>
   </div>
   <div id="searchBar" class="hidden">
     <input type="text" id="findIn" placeholder="Find" autocomplete="off">
@@ -289,9 +242,7 @@ header{background:var(--panel);border-bottom:1px solid var(--line);flex:none;z-i
           <button class="btn" id="importBtn">Restore backup</button>
         </div>
         <div id="docList"></div>
-        <p class="note2" id="storageInfo"></p>
-        <div class="sigRow hidden" id="sigRow"><span class="note2" id="sigInfo" style="margin:0"></span><button class="btn danger" id="sigClear">Delete saved signatures</button></div>
-        <p class="note2">Documents and edits save automatically in <b>this browser on this device only</b>. They are not a permanent backup: clearing browsing data, using a private window or uninstalling the browser deletes them. Use <b>Export backup</b> regularly and keep the file somewhere safe (for example Google Drive); <b>Restore backup</b> brings everything back on any device.</p>
+        <p class="note2">Every document and edit is saved automatically in this browser. Use <b>Export backup</b> now and then to keep a copy (for example in Google Drive) or to move your work to another device.</p>
       </section>
     </div>
     <div id="pages" class="hidden t-select"></div>
@@ -312,7 +263,6 @@ header{background:var(--panel);border-bottom:1px solid var(--line);flex:none;z-i
   <button class="btn" id="barRestore">Restore</button>
 </div>
 <div id="annBar" class="float">
-  <select id="annSigner" title="Assigned signer"></select>
   <input type="color" id="annColor" title="Colour">
   <select id="annWidth" title="Line width"><option value="1">1 pt</option><option value="2">2 pt</option><option value="3">3 pt</option><option value="5">5 pt</option><option value="8">8 pt</option></select>
   <button class="btn danger" id="annDel">Delete</button>
@@ -682,67 +632,21 @@ async function removeItemsText(doc, page, targets, allItems){
 }
 // Drop every object not reachable from the trailer so removed text/pages are not left inside the file.
 function collectGarbage(doc){
-  const {PDFRef, PDFDict, PDFArray, PDFStream, PDFName} = L();
+  const {PDFRef, PDFDict, PDFArray, PDFStream} = L();
   const ctx = doc.context; const seen = new Set(); const stack = [];
-  // Pages removed from the page tree must not be kept alive by bookmarks or named destinations.
-  const live = new Set(doc.getPages().map(p=>p.ref.tag));
-  const isDeadPage = o => o instanceof PDFDict && String(o.get(PDFName.of("Type")))==="/Page";
   const ti = ctx.trailerInfo;
   for(const r of [ti.Root, ti.Info, ti.Encrypt]) if(r) stack.push(r);
   const visit = obj => {
     if(!obj) return;
-    if(obj instanceof PDFRef){
-      if(seen.has(obj.tag)) return;
-      const t = ctx.lookup(obj);
-      if(isDeadPage(t) && !live.has(obj.tag)) return;
-      seen.add(obj.tag); stack.push(t); return;
-    }
+    if(obj instanceof PDFRef){ if(!seen.has(obj.tag)){ seen.add(obj.tag); stack.push(ctx.lookup(obj)); } return; }
     if(obj instanceof PDFDict){ for(const [,v] of obj.entries()) visit(v); return; }
     if(obj instanceof PDFArray){ for(let i=0;i<obj.size();i++) visit(obj.get(i)); return; }
     if(obj instanceof PDFStream){ visit(obj.dict); return; }
   };
-  pruneOutlines(doc, live);
   while(stack.length){ const o=stack.pop(); if(o instanceof PDFRef){ visit(o); } else visit(o); }
   let removed=0;
   for(const [ref] of ctx.enumerateIndirectObjects()){ if(!seen.has(ref.tag)){ ctx.delete(ref); removed++; } }
   return removed;
-}
-// Remove bookmarks that point at pages that are no longer in the document.
-function pruneOutlines(doc, live){
-  const {PDFName, PDFDict, PDFArray, PDFRef, PDFNumber} = L();
-  const N = n => PDFName.of(n);
-  const outlines = doc.catalog.lookup(N("Outlines"));
-  if(!(outlines instanceof PDFDict)) return;
-  const targetRef = item => {
-    let d = item.get(N("Dest"));
-    const a = item.lookup(N("A"));
-    if(!d && a instanceof PDFDict && String(a.get(N("S")))==="/GoTo") d = a.get(N("D"));
-    if(d instanceof PDFRef) d = doc.context.lookup(d);
-    if(d instanceof PDFArray && d.size() && d.get(0) instanceof PDFRef) return d.get(0);
-    return null;
-  };
-  const dead = ref => { const o = doc.context.lookup(ref); return o instanceof PDFDict && String(o.get(N("Type")))==="/Page" && !live.has(ref.tag); };
-  const walk = parent => {
-    let ref = parent.get(N("First")), prevRef = null, count = 0, guard = 0;
-    while(ref instanceof PDFRef && guard++ < 10000){
-      const item = doc.context.lookup(ref); if(!(item instanceof PDFDict)) break;
-      const next = item.get(N("Next"));
-      const t = targetRef(item);
-      if(t && dead(t) && !(item.get(N("First")) instanceof PDFRef)){
-        if(prevRef) doc.context.lookup(prevRef).set(N("Next"), next); else if(next) parent.set(N("First"), next); else parent.delete(N("First"));
-        if(next instanceof PDFRef){ const nx = doc.context.lookup(next); if(prevRef) nx.set(N("Prev"), prevRef); else nx.delete(N("Prev")); }
-        else { if(prevRef) { parent.set(N("Last"), prevRef); doc.context.lookup(prevRef).delete(N("Next")); } else parent.delete(N("Last")); }
-      } else {
-        count += 1 + walk(item);
-        prevRef = ref;
-      }
-      ref = next;
-    }
-    const c = parent.lookup(N("Count"));
-    if(c instanceof PDFNumber) parent.set(N("Count"), doc.context.obj(c.asNumber() < 0 ? -count : count));
-    return count;
-  };
-  walk(outlines);
 }
 root.PdfEdit = {pageContentBytes, setPageContent, buildFontInfos, removeItemsText, collectGarbage};
 })(typeof window!=="undefined"?window:globalThis);
@@ -961,7 +865,6 @@ function afterChange(){
   if(pageSig() !== S.lastSig){ rebuildViews(); buildThumbs(); }
   else refreshAll();
   scheduleSave(); updUndo();
-  if(S.mode === "sign") fillSignerMenus();
   if(SR.open && SR.q) runSearch(true);
 }
 const annById = id => S.m && S.m.annots.find(a=>a.id===id);
@@ -994,7 +897,6 @@ async function loadFile(file){
     }
     await loadSession({id, name:file.name, created:Date.now(), srcIds:[bid], sources:[bytes], model:null, versions:[]});
     scheduleSave();
-    checkSpace();
   }catch(e){ fail("Couldn't open the PDF", e); }
   finally{ busy(false); }
 }
@@ -1037,16 +939,15 @@ async function loadSession(o){
   H.past.length = 0; H.future.length = 0; updUndo();
   $("home").classList.add("hidden"); pagesEl.classList.remove("hidden");
   $("fileName").textContent = S.name; document.title = S.name + " · PDF Editor";
-  for(const id of ["dlBtn","verBtn","insertBtn","mergeBtn","modeEdit","modeSign"]) $(id).disabled = false;
-  S.m.signers ||= []; S.m.signLog ||= []; S.curSigner = null;
+  for(const id of ["dlBtn","verBtn","insertBtn","mergeBtn"]) $(id).disabled = false;
   if(innerWidth > 820) $("side").classList.remove("closed");
-  S.zoom = 1; rebuildViews(); buildThumbs(); setMode("edit");
+  S.zoom = 1; rebuildViews(); buildThumbs(); setTool("select");
   $("saveState").textContent = storageOK ? "Saved" : "Not saved";
 }
 function closeSession(){
   finishEdit(); hideFloats();
   for(const s of S.sources) try{ s.pdf.destroy(); }catch(e){}
-  S.sources = []; pinfo.clear(); spCache.clear(); fontCache.clear(); S.views.clear(); S.m = null; S.docId = null; S.sel = null;
+  S.sources = []; pinfo.clear(); spCache.clear(); fontCache.clear(); S.views.clear(); S.m = null; S.sel = null;
   pagesEl.innerHTML = ""; $("thumbs").innerHTML = "";
   closeSearch();
 }
@@ -1088,7 +989,7 @@ function computeScale(){
   const avail = Math.max(240, mainEl.clientWidth - 36);
   S.fit = Math.min(avail / maxW, 2.2);
   S.scale = S.fit * S.zoom;
-  $("zoomVal").value = Math.round(S.zoom * 100) + "%";
+  $("zoomVal").textContent = Math.round(S.scale/ (96/72) * 100) + "%";
 }
 function rebuildViews(){
   hideFloats();
@@ -1157,11 +1058,8 @@ function buildItems(view, sp){
   if(view.items) for(const it of view.items) it.el.remove();
   view.items = itemsOf(sp).map(d => makeItem(view, sp, d));
 }
-function refreshAll(){ for(const v of S.views.values()) if(v.rendered) refreshView(v); positionFloats(); }
-// Text can be clicked to edit in Select and Edit modes, but not while signing or drawing.
-function inlineEditable(){ return S.mode !== "sign" && (S.tool === "select" || S.tool === "edit"); }
+function refreshAll(){ for(const v of S.views.values()) refreshView(v); positionFloats(); }
 function refreshView(view){
-  if(!view.rendered) return; // pages not on screen are refreshed when they render
   if(view.items){
     const sp = view.items[0]?.sp;
     if(sp && itemsOf(sp).length !== view.items.length) buildItems(view, sp);
@@ -1176,12 +1074,11 @@ function makeItem(view, sp, d){
   const el = document.createElement("span");
   el.className = "ti"; el.spellcheck = false;
   const it = {kind:"item", view, sp, d, key:view.uid+"|"+d.i, el};
-  el.addEventListener("pointerdown", e => { if(active === it) e.stopPropagation(); });
-  el.addEventListener("click", e => {
-    if(!inlineEditable()) return;
-    e.stopPropagation();
-    if(active !== it) startEdit(it, e);
+  el.addEventListener("pointerdown", e => {
+    if(active === it){ e.stopPropagation(); return; }
+    if(S.tool === "edit"){ e.preventDefault(); e.stopPropagation(); startEdit(it, e); }
   });
+  el.addEventListener("dblclick", e => { if(S.tool === "select" && active !== it){ e.preventDefault(); startEdit(it, e); } });
   wireEditable(el);
   view.layer.appendChild(el);
   return it;
@@ -1417,7 +1314,7 @@ function drawAnnots(view){
   const sc = vp.scale;
   let h = "";
   const keepTb = new Set();
-  view.nlayer.querySelectorAll(".note,.selbox,.field").forEach(n=>n.remove());
+  view.nlayer.querySelectorAll(".note,.selbox").forEach(n=>n.remove());
   for(const a of S.m.annots){
     if(a.uid !== view.uid) continue;
     const col = a.color || "#e0245e", id = a.id, wpx = Math.max(1, (a.w||2)*sc);
@@ -1452,7 +1349,6 @@ function drawAnnots(view){
       const pts = a.pts.map(t=>P(t[0],t[1]).join(",")).join(" ");
       h += `<polyline points="${pts}" fill="none" stroke="${col}" stroke-width="${wpx}" stroke-linecap="round" stroke-linejoin="round" data-id="${id}"/>`;
       h += `<polyline class="hit" points="${pts}" fill="none" stroke="transparent" stroke-width="${wpx+12}" data-id="${id}"/>`;
-    } else if(a.type==="field"){ renderField(view, a);
     } else if(a.type==="note"){
       const p = P(a.pt[0], a.pt[1]);
       const n = document.createElement("div"); n.className = "note"; n.dataset.id = id;
@@ -1465,12 +1361,11 @@ function drawAnnots(view){
       if(!el){
         el = document.createElement("span"); el.className = "tb"; el.spellcheck = false; el.dataset.id = id;
         wireEditable(el); view.tbEls.set(id, el); view.nlayer.appendChild(el);
-        el.addEventListener("pointerdown", e => { if(active && active.el === el) e.stopPropagation(); });
-        el.addEventListener("click", e => {
-          if(!(inlineEditable() || S.tool === "addtext")) return;
-          e.stopPropagation();
-          if(!(active && active.el === el)) startEdit({kind:"tb", id, view, el}, e);
+        el.addEventListener("pointerdown", e => {
+          if(active && active.el === el){ e.stopPropagation(); return; }
+          if(S.tool === "edit" || S.tool === "addtext"){ e.preventDefault(); e.stopPropagation(); startEdit({kind:"tb", id, view, el}, e); }
         });
+        el.addEventListener("dblclick", e => { if(S.tool==="select"){ e.preventDefault(); startEdit({kind:"tb", id, view, el}, e); } });
       }
       if(!(active && active.el === el) && el.textContent !== a.text) el.textContent = a.text;
       layoutText({kind:"tb", id, view, el});
@@ -1497,9 +1392,8 @@ function drawSelBox(view, a){
 }
 function selectAnn(id){
   if(S.sel === id) return;
-  const prev = S.sel && annById(S.sel), cur = id && annById(id);
   S.sel = id;
-  for(const u of new Set([prev && prev.uid, cur && cur.uid].filter(Boolean))){ const v = S.views.get(u); if(v) drawAnnots(v); }
+  for(const v of S.views.values()) drawAnnots(v);
   closeNote(false);
   positionFloats();
 }
@@ -1508,11 +1402,9 @@ function positionFloats(){
   const bar = $("bar");
   if(active && bar.style.display !== "none") placeFloat(bar, active.el.getBoundingClientRect());
   const ab = $("annBar"), a = S.sel && annById(S.sel), view = a && S.views.get(a.uid);
-  if(a && view && a.type !== "note" && a.type !== "text" && !(a.type==="field" && (a.locked || S.mode!=="sign"))){
+  if(a && view && a.type !== "note" && a.type !== "text"){
     ab.style.display = "flex";
-    const isF = a.type === "field";
-    $("annSigner").classList.toggle("hidden", !isF); if(isF){ fillSignerMenus(); $("annSigner").value = a.signer; }
-    $("annColor").value = a.color || "#000000"; $("annColor").classList.toggle("hidden", a.type==="redact" || isF);
+    $("annColor").value = a.color || "#000000"; $("annColor").classList.toggle("hidden", a.type==="redact");
     $("annWidth").classList.toggle("hidden", !["rect","ellipse","arrow","ink"].includes(a.type));
     $("annWidth").value = String(a.w||2);
     const box = view.nlayer.querySelector(".selbox");
@@ -1533,7 +1425,6 @@ $("annWidth").onchange = e => { const a = annById(S.sel); if(!a) return; change(
 $("annDel").onclick = () => deleteSelected();
 function deleteSelected(){
   const a = annById(S.sel); if(!a) return;
-  if(a.locked){ toast("Signed fields can't be deleted. Use Undo to reverse the signing."); return; }
   change(()=>{ S.m.annots = S.m.annots.filter(x=>x!==a); }); S.sel = null; positionFloats(); toast("Deleted", 1200);
 }
 
@@ -1568,7 +1459,7 @@ function setTool(t){
   document.querySelectorAll("[data-tool]").forEach(b=>b.classList.toggle("on", b.dataset.tool===t));
   pagesEl.className = (pagesEl.classList.contains("hidden")?"hidden ":"") + "t-"+t + (DRAG_TOOLS.has(t)?" drawing":"");
   $("colorIn").value = S.colors[t] || "#000000";
-  $("colorIn").disabled = (t==="select" || t==="edit" || t==="redact" || t==="sign");
+  $("colorIn").disabled = (t==="select" || t==="edit" || t==="redact");
   if(t !== "select") selectAnn(null);
 }
 document.querySelectorAll("[data-tool]").forEach(b => b.onclick = () => setTool(b.dataset.tool));
@@ -1580,7 +1471,6 @@ function onPageDown(view, e){
   const tool = S.tool;
   const t = e.target;
   if(t.closest(".tb.editing") || t.closest(".ti.editing")) return;
-  if(tool === "sign"){ signDown(view, e); return; }
   const hit = t.closest("[data-id]");
   if(tool === "select"){
     if(t.dataset && t.dataset.h){ beginResize(view, e, t.closest(".selbox").dataset.id, t.dataset.h); return; }
@@ -1588,10 +1478,7 @@ function onPageDown(view, e){
       const a = annById(hit.dataset.id); if(!a) return;
       e.preventDefault();
       selectAnn(a.id);
-      beginMove(view, e, a, () => {
-        if(a.type==="note") openNote(a);
-        else if(a.type==="text" && inlineEditable()){ const el = view.tbEls.get(a.id); if(el) startEdit({kind:"tb", id:a.id, view, el}, e); }
-      });
+      beginMove(view, e, a, () => { if(a.type==="note") openNote(a); });
       return;
     }
     if(!t.closest(".ti")) selectAnn(null);
@@ -1980,38 +1867,18 @@ $("ocrBtn").onclick = async () => {
 };
 
 // ============================================================ zoom & keys
-// Zoom is a percentage of "fit to width" (100%). Steps are 10%; any value from 10% to 400% can be typed in.
-const ZMIN = 10, ZMAX = 400;
-const zoomPct = () => Math.round(S.zoom * 100);
-function setZoomPct(p){
+const ZOOMS = [0.5, 0.67, 0.8, 1, 1.25, 1.5, 2, 2.5, 3];
+function setZoom(z){
   if(!S.m) return;
   finishEdit();
   const ratio = mainEl.scrollTop / Math.max(1, mainEl.scrollHeight);
-  S.zoom = clamp(Math.round(p), ZMIN, ZMAX) / 100; rebuildViews();
+  S.zoom = clamp(z, 0.25, 4); rebuildViews();
   mainEl.scrollTop = ratio * mainEl.scrollHeight;
-  $("zoomVal").value = zoomPct() + "%";
 }
-(function fillZoomList(){
-  let h = ""; for(let p = ZMIN; p <= ZMAX; p += 10) h += `<option value="${p}%">`;
-  $("zoomList").innerHTML = h;
-})();
-$("zoomIn").onclick = () => setZoomPct((Math.floor(zoomPct()/10) + 1) * 10);
-$("zoomOut").onclick = () => setZoomPct((Math.ceil(zoomPct()/10) - 1) * 10);
-function commitZoomInput(){
-  const n = parseFloat(String($("zoomVal").value).replace(/[^0-9.]/g, ""));
-  if(isFinite(n) && n >= ZMIN && n <= ZMAX) setZoomPct(n);
-  else { toast(`Enter a zoom from ${ZMIN}% to ${ZMAX}%`, 2500); $("zoomVal").value = zoomPct() + "%"; }
-}
-$("zoomVal").addEventListener("change", commitZoomInput);
-$("zoomVal").addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); commitZoomInput(); $("zoomVal").blur(); } e.stopPropagation(); });
-$("zoomVal").addEventListener("focus", () => $("zoomVal").select());
-mainEl.addEventListener("wheel", e => {
-  if(!(e.ctrlKey && S.m)) return;
-  e.preventDefault();
-  const target = (zoomPct() + (e.deltaY < 0 ? 10 : -10));
-  clearTimeout(setZoomPct._t); setZoomPct._t = setTimeout(()=>setZoomPct(Math.floor(target/10)*10 || 10), 120);
-  $("zoomVal").value = target + "%";
-}, {passive:false});
+$("zoomIn").onclick = () => setZoom(ZOOMS.find(z=>z > S.zoom+0.01) || S.zoom);
+$("zoomOut").onclick = () => setZoom([...ZOOMS].reverse().find(z=>z < S.zoom-0.01) || S.zoom);
+$("zoomVal").onclick = () => setZoom(1);
+mainEl.addEventListener("wheel", e => { if(e.ctrlKey && S.m){ e.preventDefault(); clearTimeout(setZoom._t); const z = S.zoom * (e.deltaY < 0 ? 1.1 : 0.9); S.zoom = z; setZoom._t = setTimeout(()=>setZoom(z), 120); } }, {passive:false});
 const TOOLKEYS = {v:"select", t:"edit", a:"addtext", h:"highlight", u:"underline", k:"strike", n:"note", r:"rect", o:"ellipse", l:"arrow", p:"pen", x:"redact"};
 document.addEventListener("keydown", e => {
   const tag = (e.target.tagName||"").toUpperCase();
@@ -2022,269 +1889,16 @@ document.addEventListener("keydown", e => {
   if(mod && k === "s"){ e.preventDefault(); if(S.m) saveVersionDialog(); return; }
   if(mod && (k === "=" || k === "+")){ e.preventDefault(); $("zoomIn").click(); return; }
   if(mod && k === "-"){ e.preventDefault(); $("zoomOut").click(); return; }
-  if(mod && k === "0"){ e.preventDefault(); setZoomPct(100); return; }
+  if(mod && k === "0"){ e.preventDefault(); setZoom(1); return; }
   if(typing) return;
   if(mod && k === "z"){ e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
   if(mod && k === "y"){ e.preventDefault(); redo(); return; }
   if(mod || e.altKey) return;
   if((k === "delete" || k === "backspace") && S.sel){ e.preventDefault(); deleteSelected(); return; }
-  if(k === "escape"){ if(S.sel) selectAnn(null); else if(S.mode==="sign") setPlace(null); else if(S.tool !== "select") setTool("select"); return; }
-  if(S.m && S.mode !== "sign" && TOOLKEYS[k]){ setTool(TOOLKEYS[k]); }
+  if(k === "escape"){ if(S.sel) selectAnn(null); else if(S.tool !== "select") setTool("select"); return; }
+  if(S.m && TOOLKEYS[k]){ setTool(TOOLKEYS[k]); }
 });
 $("undoBtn").onclick = undo; $("redoBtn").onclick = redo;
-// ============================================================ signing mode
-const FIELD = {
-  signature:{label:"Signature", w:170, h:46}, initials:{label:"Initials", w:70, h:40},
-  date:{label:"Date", w:140, h:22}, name:{label:"Name", w:160, h:22}, text:{label:"Text", w:170, h:22},
-};
-const SIGNER_COLORS = ["#1f6feb","#d1242f","#1a7f37","#8250df","#bc4c00","#0e7490"];
-S.mode = "edit"; S.placeField = null; S.curSigner = null;
-function ensureSigners(){
-  S.m.signers ||= []; S.m.signLog ||= [];
-  if(!S.m.signers.length) S.m.signers.push({id:"s1", name:"Me", color:SIGNER_COLORS[0]});
-  if(!S.curSigner || !S.m.signers.some(s=>s.id===S.curSigner)) S.curSigner = S.m.signers[0].id;
-}
-const signerOf = id => (S.m.signers||[]).find(s=>s.id===id);
-function fillSignerMenus(){
-  if(!S.m) return;
-  ensureSigners();
-  const opts = S.m.signers.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join("");
-  $("signerSel").innerHTML = opts; $("signerSel").value = S.curSigner;
-  $("annSigner").innerHTML = opts;
-  $("finishSign").textContent = `Finish signing as ${signerOf(S.curSigner).name}`;
-}
-function setMode(mode){
-  if(!S.m) return;
-  finishEdit(); closeNote(true); selectAnn(null);
-  S.mode = mode;
-  $("modeEdit").classList.toggle("on", mode==="edit"); $("modeSign").classList.toggle("on", mode==="sign");
-  $("tools").classList.toggle("hidden", mode==="sign"); $("signTools").classList.toggle("hidden", mode!=="sign");
-  if(mode === "sign"){ fillSignerMenus(); setTool("sign"); if(!S.m.annots.some(a=>a.type==="field")) toast("Choose a field type above, then click on the page to place it.", 4500); }
-  else { setPlace(null); setTool("select"); }
-}
-$("modeEdit").onclick = () => setMode("edit");
-$("modeSign").onclick = () => setMode("sign");
-$("signerSel").onchange = e => { S.curSigner = e.target.value; fillSignerMenus(); refreshAll(); };
-function setPlace(kind){
-  S.placeField = (S.placeField === kind) ? null : kind;
-  document.querySelectorAll(".fbtn").forEach(b=>b.classList.toggle("on", b.dataset.field===S.placeField));
-  pagesEl.classList.toggle("placing", !!S.placeField);
-}
-document.querySelectorAll(".fbtn").forEach(b => b.onclick = () => setPlace(b.dataset.field));
-$("addSigner").onclick = () => {
-  modal(`<h3>Add a signer</h3><input type="text" id="sgName" placeholder="Full name" autocomplete="off"><p class="note2">Each signer gets their own colour. Fields you place are assigned to the signer selected in the toolbar. Everyone signs on this device, one after another.</p><div class="acts"><button class="btn" id="sgCancel">Cancel</button><button class="btn primary" id="sgAdd">Add</button></div>`);
-  const inp = $("sgName"); inp.focus();
-  const go = () => {
-    const name = inp.value.trim(); if(!name){ inp.focus(); return; }
-    const s = {id:"s"+newId(), name, color:SIGNER_COLORS[S.m.signers.length % SIGNER_COLORS.length]};
-    change(()=>{ S.m.signers.push(s); }); S.curSigner = s.id; fillSignerMenus(); closeModal();
-  };
-  $("sgAdd").onclick = go; $("sgCancel").onclick = closeModal;
-  inp.addEventListener("keydown", e => { if(e.key==="Enter") go(); if(e.key==="Escape") closeModal(); e.stopPropagation(); });
-};
-$("annSigner").onchange = e => { const a = annById(S.sel); if(!a) return; change(()=>{ a.signer = e.target.value; }); };
-function renderField(view, a){
-  const s = signerOf(a.signer) || {name:"?", color:"#666"};
-  const r = view.vp.convertToViewportRectangle(a.rect);
-  const el = document.createElement("div");
-  el.className = "field" + (a.value ? " filled" : "") + (a.locked ? " signed" : "");
-  el.dataset.id = a.id;
-  el.style.setProperty("--fc", s.color);
-  Object.assign(el.style, {left:Math.min(r[0],r[2])+"px", top:Math.min(r[1],r[3])+"px", width:Math.abs(r[2]-r[0])+"px", height:Math.abs(r[3]-r[1])+"px"});
-  if(a.value && (a.kind==="signature" || a.kind==="initials")){ const img = document.createElement("img"); img.src = a.value; el.appendChild(img); }
-  else if(a.value){ const sp = document.createElement("span"); sp.className = "fv"; sp.textContent = a.value; sp.style.fontSize = Math.min(Math.abs(r[3]-r[1])*0.62, 14*view.vp.scale)+"px"; el.appendChild(sp); }
-  else el.textContent = `${FIELD[a.kind].label} · ${s.name}`;
-  el.title = a.locked ? `Signed by ${s.name}` : `${FIELD[a.kind].label} for ${s.name}`;
-  view.nlayer.appendChild(el);
-}
-function placeField(view, e){
-  const [x, y] = view.vp.convertToPdfPoint(...local(view, e));
-  const f = FIELD[S.placeField];
-  const a = {id:uidSeq(), uid:view.uid, type:"field", kind:S.placeField, signer:S.curSigner, rect:[x, y-f.h, x+f.w, y], value:""};
-  change(()=>{ S.m.annots.push(a); });
-  setPlace(null); selectAnn(a.id);
-}
-function signDown(view, e){
-  const t = e.target;
-  if(t.dataset && t.dataset.h){ const a = annById(t.closest(".selbox").dataset.id); if(a && !a.locked) beginResize(view, e, a.id, t.dataset.h); return; }
-  const fe = t.closest(".field,.selbox");
-  if(fe){
-    const a = annById(fe.dataset.id); if(!a || a.type !== "field") return;
-    e.preventDefault();
-    if(a.locked){ toast(`Already signed by ${signerOf(a.signer)?.name||"a signer"}.`); return; }
-    selectAnn(a.id);
-    beginMove(view, e, a, () => fillField(a));
-    return;
-  }
-  if(S.placeField){ e.preventDefault(); placeField(view, e); return; }
-  selectAnn(null);
-}
-async function fillField(a){
-  if(a.locked) return;
-  const s = signerOf(a.signer);
-  if(a.signer !== S.curSigner){ toast(`This field is for ${s?.name}. Choose them in the Signer menu to fill it in.`, 4000); return; }
-  let v = null;
-  if(a.kind === "signature" || a.kind === "initials") v = await signatureDialog(a.kind, s.name);
-  else if(a.kind === "date") v = new Date().toLocaleDateString(undefined, {year:"numeric", month:"long", day:"numeric"});
-  else if(a.kind === "name") v = s.name;
-  else v = await textDialog(a.value);
-  if(v === null || v === undefined) return;
-  change(()=>{ a.value = v; });
-}
-function textDialog(cur){
-  return new Promise(res => {
-    modal(`<h3>Fill in text</h3><input type="text" id="tdIn" autocomplete="off"><div class="acts"><button class="btn" id="tdC">Cancel</button><button class="btn primary" id="tdOk">Done</button></div>`);
-    const inp = $("tdIn"); inp.value = cur || ""; inp.focus();
-    const done = v => { closeModal(); res(v); };
-    $("tdOk").onclick = () => done(inp.value); $("tdC").onclick = () => done(null);
-    inp.addEventListener("keydown", e => { if(e.key==="Enter") done(inp.value); if(e.key==="Escape") done(null); e.stopPropagation(); });
-  });
-}
-// saved signatures live in this browser only
-function savedSigs(){ try{ return JSON.parse(localStorage.getItem("pdfed-sigs")||"[]"); }catch(e){ return []; } }
-function storeSigs(list){ try{ localStorage.setItem("pdfed-sigs", JSON.stringify(list.slice(-12))); return true; }catch(e){ return false; } }
-const TYPE_FONTS = [["caveat","Caveat"],["pacifico","Pacifico"],["lobster","Lobster"],["amatic-sc","Amatic SC"]];
-function initialsOf(n){ return n.split(/\s+/).filter(Boolean).map(w=>w[0].toUpperCase()).join("").slice(0,3) || "X"; }
-function trimCanvas(c){
-  const ctx = c.getContext("2d"), {width:w, height:h} = c, d = ctx.getImageData(0,0,w,h).data;
-  let x0=w, y0=h, x1=-1, y1=-1;
-  for(let y=0;y<h;y++) for(let x=0;x<w;x++) if(d[(y*w+x)*4+3] > 10){ if(x<x0)x0=x; if(x>x1)x1=x; if(y<y0)y0=y; if(y>y1)y1=y; }
-  if(x1 < 0) return null;
-  const pad = 6, o = document.createElement("canvas");
-  o.width = x1-x0+1+pad*2; o.height = y1-y0+1+pad*2;
-  o.getContext("2d").drawImage(c, x0-pad, y0-pad, o.width, o.height, 0, 0, o.width, o.height);
-  return o.toDataURL("image/png");
-}
-function signatureDialog(kind, name){
-  return new Promise(res => {
-    const isInit = kind === "initials";
-    const mine = savedSigs().filter(s=>s.kind===kind);
-    modal(`<h3>${isInit ? "Your initials" : "Your signature"}</h3>
-      <div class="tabs"><button data-t="draw" class="on">Draw</button><button data-t="type">Type</button><button data-t="upload">Upload</button>${mine.length?'<button data-t="saved">Saved</button>':""}</div>
-      <div data-p="draw"><canvas class="sigpad" id="sgPad"></canvas><div class="sigrow"><span class="note2" style="margin:0">Draw with your mouse, finger or stylus.</span><span class="spacer"></span><button class="btn" id="sgClear">Clear</button></div></div>
-      <div data-p="type" class="hidden"><input type="text" id="sgType" autocomplete="off"><div class="sigrow"><select id="sgFont">${TYPE_FONTS.map(f=>`<option value="${f[0]}">${f[1]}</option>`).join("")}</select></div><canvas class="sigpad" id="sgTypePrev" style="margin-top:8px"></canvas></div>
-      <div data-p="upload" class="hidden"><input type="file" id="sgFile" accept="image/*"><canvas class="sigpad" id="sgUpPrev" style="margin-top:8px"></canvas><p class="note2">A photo or scan of your signature on white paper works best. The white background is removed automatically.</p></div>
-      <div data-p="saved" class="hidden"><div class="saved" id="sgSaved"></div></div>
-      <label class="chk"><input type="checkbox" id="sgKeep" checked> Save for next time on this device</label>
-      <div class="acts"><button class="btn" id="sgCancel">Cancel</button><button class="btn primary" id="sgOk">${isInit?"Use initials":"Use signature"}</button></div>`);
-    let tab = "draw", savedPick = null;
-    const box = $("modalBox");
-    const setup = c => { const r = c.getBoundingClientRect(), d = Math.min(devicePixelRatio||1, 2); c.width = Math.round(r.width*d); c.height = Math.round(r.height*d); const x = c.getContext("2d"); x.setTransform(d,0,0,d,0,0); return x; };
-    box.querySelectorAll(".tabs button").forEach(b => b.onclick = () => {
-      tab = b.dataset.t;
-      box.querySelectorAll(".tabs button").forEach(x=>x.classList.toggle("on", x===b));
-      box.querySelectorAll("[data-p]").forEach(p=>p.classList.toggle("hidden", p.dataset.p!==tab));
-      if(tab === "type") drawTyped();
-    });
-    // draw
-    const pad = $("sgPad"), pctx = setup(pad); let drew = false, last = null;
-    pctx.lineWidth = 2.6; pctx.lineCap = "round"; pctx.lineJoin = "round"; pctx.strokeStyle = "#0b1f4b";
-    pad.addEventListener("pointerdown", e => { pad.setPointerCapture(e.pointerId); const r = pad.getBoundingClientRect(); last = [e.clientX-r.left, e.clientY-r.top]; pctx.beginPath(); pctx.arc(last[0], last[1], 1.2, 0, 7); pctx.fillStyle = "#0b1f4b"; pctx.fill(); drew = true; });
-    pad.addEventListener("pointermove", e => { if(!last) return; const r = pad.getBoundingClientRect(), p = [e.clientX-r.left, e.clientY-r.top]; pctx.beginPath(); pctx.moveTo(...last); pctx.lineTo(...p); pctx.stroke(); last = p; });
-    const stop = () => { last = null; }; pad.addEventListener("pointerup", stop); pad.addEventListener("pointercancel", stop);
-    $("sgClear").onclick = () => { pctx.clearRect(0,0,pad.width,pad.height); drew = false; };
-    // type
-    const tin = $("sgType"); tin.value = isInit ? initialsOf(name) : name;
-    const tprev = $("sgTypePrev"); let tctx = null;
-    async function drawTyped(){
-      tctx ||= setup(tprev);
-      const fid = $("sgFont").value;
-      try{ await loadPack(fid); }catch(e){}
-      const W = tprev.getBoundingClientRect().width, Hh = tprev.getBoundingClientRect().height;
-      tctx.clearRect(0,0,W,Hh); tctx.fillStyle = "#0b1f4b";
-      let size = 64; tctx.font = `${size}px "GF-${fid}", cursive`;
-      while(size > 16 && tctx.measureText(tin.value).width > W-30){ size -= 4; tctx.font = `${size}px "GF-${fid}", cursive`; }
-      tctx.textBaseline = "middle"; tctx.fillText(tin.value, 15, Hh/2);
-    }
-    tin.addEventListener("input", drawTyped); $("sgFont").onchange = drawTyped;
-    tin.addEventListener("keydown", e => e.stopPropagation());
-    // upload
-    const uprev = $("sgUpPrev"); let uploaded = false;
-    $("sgFile").onchange = async e => {
-      const f = e.target.files[0]; if(!f) return;
-      try{
-        const bmp = await createImageBitmap(f);
-        const uctx = setup(uprev), W = uprev.getBoundingClientRect().width, Hh = uprev.getBoundingClientRect().height;
-        const sc = Math.min((W-20)/bmp.width, (Hh-20)/bmp.height);
-        uctx.clearRect(0,0,W,Hh); uctx.drawImage(bmp, 10, 10, bmp.width*sc, bmp.height*sc);
-        const id = uctx.getImageData(0,0,uprev.width,uprev.height), d = id.data;
-        for(let i=0;i<d.length;i+=4){ const l = (d[i]+d[i+1]+d[i+2])/3; if(l > 200) d[i+3] = 0; else if(l > 150) d[i+3] = Math.round(d[i+3]*(200-l)/50); }
-        uctx.putImageData(id, 0, 0); uploaded = true;
-      }catch(err){ toast("That image couldn't be read. Try a PNG or JPG.", 4000, true); }
-    };
-    // saved
-    const sv = $("sgSaved");
-    if(sv){
-      const renderSaved = () => {
-        sv.innerHTML = "";
-        for(const s of savedSigs().filter(s=>s.kind===kind)){
-          const d = document.createElement("div"); d.className = "sv"; d.innerHTML = `<img src="${s.data}" alt=""><button title="Remove">✕</button>`;
-          d.onclick = () => { savedPick = s.data; sv.querySelectorAll(".sv").forEach(x=>x.style.outline=""); d.style.outline = "2px solid var(--accent)"; };
-          d.querySelector("button").onclick = ev => { ev.stopPropagation(); storeSigs(savedSigs().filter(x=>x.id!==s.id)); renderSaved(); };
-          sv.appendChild(d);
-        }
-      };
-      renderSaved();
-    }
-    const done = v => { closeModal(); res(v); };
-    $("sgCancel").onclick = () => done(null);
-    $("sgOk").onclick = () => {
-      let data = null;
-      if(tab === "draw"){ if(!drew){ toast("Draw your " + (isInit?"initials":"signature") + " first."); return; } data = trimCanvas(pad); }
-      else if(tab === "type"){ if(!tin.value.trim()){ tin.focus(); return; } data = trimCanvas(tprev); }
-      else if(tab === "upload"){ if(!uploaded){ toast("Choose an image first."); return; } data = trimCanvas(uprev); }
-      else data = savedPick;
-      if(!data){ toast("Nothing to use yet."); return; }
-      if(tab !== "saved" && $("sgKeep").checked){ const list = savedSigs(); list.push({id:newId(), kind, name, data}); if(!storeSigs(list)) toast("Couldn't save the signature on this device, but it will still be used."); }
-      done(data);
-    };
-  });
-}
-async function sha256Hex(bytes){
-  try{ const h = await crypto.subtle.digest("SHA-256", bytes); return [...new Uint8Array(h)].map(b=>b.toString(16).padStart(2,"0")).join(""); }
-  catch(e){ return "unavailable"; }
-}
-$("finishSign").onclick = async () => {
-  if(!S.m) return;
-  ensureSigners();
-  const s = signerOf(S.curSigner);
-  const mine = S.m.annots.filter(a=>a.type==="field" && a.signer===s.id && !a.locked);
-  if(!mine.length){ toast(`There are no open fields for ${s.name}. Place fields first, or choose another signer.`, 4500); return; }
-  const empty = mine.filter(a=>!a.value);
-  if(empty.length){
-    toast(`${empty.length} field${empty.length>1?"s are":" is"} still empty for ${s.name}. Click each highlighted field to fill it in.`, 4500);
-    const v = S.views.get(empty[0].uid); if(v) v.wrap.scrollIntoView({block:"center", behavior:"smooth"});
-    return;
-  }
-  modal(`<h3>Finish signing as ${esc(s.name)}</h3>
-    <p class="note2" style="font-size:13px">You filled in ${mine.length} field${mine.length>1?"s":""}. After you finish, these fields are locked.</p>
-    <label class="chk"><input type="checkbox" id="fsAgree"> <span>I agree to sign this document electronically, and I intend my electronic signature to have the same effect as my handwritten signature.</span></label>
-    <div class="acts"><button class="btn" id="fsC">Cancel</button><button class="btn primary" id="fsOk">Finish signing</button></div>`);
-  $("fsC").onclick = closeModal;
-  $("fsOk").onclick = async () => {
-    if(!$("fsAgree").checked){ toast("Tick the box to agree before finishing."); return; }
-    const hash = await sha256Hex(S.sources[0].bytes);
-    const at = new Date().toISOString();
-    change(()=>{
-      for(const a of mine){ a.locked = true; a.signedAt = at; }
-      S.m.signLog.push({signer:s.name, at, fields:mine.length, kinds:[...new Set(mine.map(a=>a.kind))], hash});
-    });
-    closeModal();
-    const next = S.m.signers.find(x => S.m.annots.some(a=>a.type==="field" && a.signer===x.id && !a.locked));
-    if(next){ S.curSigner = next.id; fillSignerMenus(); refreshAll(); toast(`Signed by ${s.name}. Next: ${next.name}.`, 4000); }
-    else { fillSignerMenus(); toast(`Signed by ${s.name}. All fields are complete. Use Download to save the signed PDF.`, 5000); }
-  };
-};
-$("signLogBtn").onclick = () => {
-  ensureSigners();
-  const rows = S.m.signLog.map(e => `<div class="ev"><b>${esc(e.signer)}</b> signed ${e.fields} field${e.fields>1?"s":""} (${esc(e.kinds.join(", "))})<div class="note2" style="margin:0">${fmtDate(e.at)}</div></div>`).join("");
-  const open = S.m.annots.filter(a=>a.type==="field" && !a.locked).length;
-  modal(`<h3>Signing history</h3><div class="log">${rows || '<p class="note2">Nobody has finished signing yet.</p>'}</div>
-    <p class="note2">${open} unsigned field${open===1?"":"s"} remaining. When you download, a signing summary page with this history and a fingerprint (SHA-256) of the original PDF is added to the end.</p>
-    <p class="note2">These are simple electronic signatures made on this device. They do not verify anyone's identity and are not certificate-based digital signatures.</p>
-    <div class="acts"><button class="btn primary" id="lgC">Close</button></div>`);
-  $("lgC").onclick = closeModal;
-};
 // ============================================================ export
 async function exportPdf(m){
   const {PDFDocument, rgb, degrees, pushGraphicsState, popGraphicsState, concatTransformationMatrix, setTextRenderingMode, TextRenderingMode, BlendMode, PDFHexString, PDFString, LineCapStyle} = PDFLib;
@@ -2338,20 +1952,19 @@ async function exportPdf(m){
     for(const a of m.annots){
       if(a.uid !== p.uid) continue;
       const c = col(a.color || "#e0245e"), w = a.w || 2;
-      if(["highlight","underline","strike","rect","ellipse","arrow","ink"].includes(a.type)) addRealAnnot(doc, page, a);
+      if(a.type === "highlight") for(const r of a.rects) page.drawRectangle({x:r[0], y:r[1], width:r[2]-r[0], height:r[3]-r[1], color:c, opacity:.38, blendMode:BlendMode.Multiply, borderWidth:0});
+      else if(a.type === "underline" || a.type === "strike") for(const r of a.rects){ const h=r[3]-r[1], y=r[1]+h*(a.type==="underline"?0.12:0.42); page.drawLine({start:{x:r[0],y}, end:{x:r[2],y}, thickness:Math.max(0.8,h*0.07), color:c}); }
+      else if(a.type === "rect") page.drawRectangle({x:a.rect[0], y:a.rect[1], width:a.rect[2]-a.rect[0], height:a.rect[3]-a.rect[1], borderColor:c, borderWidth:w});
+      else if(a.type === "ellipse") page.drawEllipse({x:(a.rect[0]+a.rect[2])/2, y:(a.rect[1]+a.rect[3])/2, xScale:(a.rect[2]-a.rect[0])/2, yScale:(a.rect[3]-a.rect[1])/2, borderColor:c, borderWidth:w});
+      else if(a.type === "arrow"){
+        const [s, e] = a.pts, ang = Math.atan2(e[1]-s[1], e[0]-s[0]), L = Math.max(6, w*4.5);
+        page.drawLine({start:{x:s[0],y:s[1]}, end:{x:e[0],y:e[1]}, thickness:w, color:c, lineCap:LineCapStyle.Round});
+        const h1 = [e[0]-L*Math.cos(ang-0.45), e[1]-L*Math.sin(ang-0.45)], h2 = [e[0]-L*Math.cos(ang+0.45), e[1]-L*Math.sin(ang+0.45)];
+        page.drawSvgPath(`M ${e[0]} ${-e[1]} L ${h1[0]} ${-h1[1]} L ${h2[0]} ${-h2[1]} Z`, {x:0, y:0, color:c, borderWidth:0});
+      }
+      else if(a.type === "ink" && a.pts.length > 1) page.drawSvgPath("M " + a.pts.map(q=>`${q[0]} ${-q[1]}`).join(" L "), {x:0, y:0, borderColor:c, borderWidth:w, borderLineCap:LineCapStyle.Round});
       else if(a.type === "redact") page.drawRectangle({x:a.rect[0], y:a.rect[1], width:a.rect[2]-a.rect[0], height:a.rect[3]-a.rect[1], color:rgb(0,0,0), borderWidth:0});
       else if(a.type === "text" && a.text.trim()) await drawText(X, page, {x:a.pt[0], y:a.pt[1], hs:1, size:a.size}, TBINFO, a.ov, a.text, rgb(0,0,0));
-      else if(a.type === "field" && a.value){
-        const r = a.rect, w = r[2]-r[0], h = r[3]-r[1];
-        if(a.kind === "signature" || a.kind === "initials"){
-          const png = await cached(X, "img:"+a.value, () => doc.embedPng(unb64(a.value.split(",")[1])));
-          const sc = Math.min(w/png.width, h/png.height);
-          page.drawImage(png, {x:r[0], y:r[1]+(h-png.height*sc)/2, width:png.width*sc, height:png.height*sc});
-        } else {
-          const size = Math.min(h*0.62, 14);
-          await drawText(X, page, {x:r[0]+2, y:r[1]+(h-size)/2+size*0.22, hs:1, size}, TBINFO, null, a.value, rgb(0.07,0.07,0.07));
-        }
-      }
     }
   }
   // Redaction: pages with redaction boxes are flattened to an image so nothing underneath survives.
@@ -2370,35 +1983,13 @@ async function exportPdf(m){
         const blob = await new Promise(r=>c.toBlob(r, "image/jpeg", 0.92));
         const img = await doc.embedJpg(new Uint8Array(await blob.arrayBuffer()));
         const w = vp.width/2.5, h = vp.height/2.5;
-        // keep hyperlinks that are not under a redaction box (upright pages only)
-        const keep = [];
-        try{
-          const p = m.pages[n], pi = pinfo.get(p.src+":"+p.idx), old = doc.getPage(n), mb = old.getMediaBox();
-          const boxes = m.annots.filter(a=>a.uid===p.uid && a.type==="redact").map(a=>a.rect);
-          const arr = old.node.Annots();
-          if(arr && (pi.rotate+p.rot)%360===0 && Math.abs(mb.x)<0.01 && Math.abs(mb.y)<0.01){
-            const {PDFName, PDFDict, PDFArray} = PDFLib;
-            for(let i=0;i<arr.size();i++){
-              const a = arr.lookup(i);
-              if(!(a instanceof PDFDict) || String(a.get(PDFName.of("Subtype")))!=="/Link") continue;
-              const r = a.lookup(PDFName.of("Rect"));
-              if(!(r instanceof PDFArray)) continue;
-              const q = [0,1,2,3].map(k=>r.lookup(k).asNumber());
-              const R = [Math.min(q[0],q[2]), Math.min(q[1],q[3]), Math.max(q[0],q[2]), Math.max(q[1],q[3])];
-              if(boxes.some(b => b[0] < R[2] && b[2] > R[0] && b[1] < R[3] && b[3] > R[1])) continue;
-              a.delete(PDFName.of("P")); keep.push(a);
-            }
-          }
-        }catch(e){ console.warn("link copy failed", e); }
         doc.removePage(n);
         const np = doc.insertPage(n, [w, h]);
         np.drawImage(img, {x:0, y:0, width:w, height:h});
-        for(const a of keep) np.node.addAnnot(doc.context.register(a));
         c.width = c.height = 0;
       }
     } finally { pdf.destroy(); }
   }
-  if(m.signLog && m.signLog.length) await addSummaryPage(doc, m);
   // Sticky notes become real PDF comments (added last so flattened pages keep them).
   const finalPages = doc.getPages();
   m.pages.forEach((p, n) => {
@@ -2417,80 +2008,6 @@ async function exportPdf(m){
   PdfEdit.collectGarbage(doc);
   const bytes = await doc.save();
   return {bytes, covered:X.covered, removed:X.removed, redacted:red.length};
-}
-// Markup and drawings are exported as real PDF annotations (editable in Acrobat and other viewers), each with its own appearance.
-function addRealAnnot(doc, page, a){
-  const {PDFHexString, PDFString} = PDFLib;
-  const ctx = doc.context, n = v => (Math.round(v*100)/100).toString();
-  const cc = hexRgb01(a.color || "#e0245e"), col = cc.map(n).join(" "), w = a.w || 2;
-  const bb = b => [b[0], b[1], b[2], b[3]];
-  let sub, rect, ops = "", extra = {}, res = {};
-  if(a.type === "highlight" || a.type === "underline" || a.type === "strike"){
-    sub = {highlight:"Highlight", underline:"Underline", strike:"StrikeOut"}[a.type];
-    rect = bb(annBBox(a));
-    extra.QuadPoints = a.rects.flatMap(r => [r[0],r[3], r[2],r[3], r[0],r[1], r[2],r[1]]);
-    if(a.type === "highlight"){ res = {ExtGState:{G0:{Type:"ExtGState", ca:0.38, CA:0.38, BM:"Multiply"}}}; ops = `/G0 gs ${col} rg ` + a.rects.map(r=>`${n(r[0])} ${n(r[1])} ${n(r[2]-r[0])} ${n(r[3]-r[1])} re f`).join(" "); extra.CA = 0.38; }
-    else ops = a.rects.map(r => { const h = r[3]-r[1], y = r[1]+h*(a.type==="underline"?0.12:0.42); return `${col} RG ${n(Math.max(0.8,h*0.07))} w ${n(r[0])} ${n(y)} m ${n(r[2])} ${n(y)} l S`; }).join(" ");
-  } else if(a.type === "rect" || a.type === "ellipse"){
-    sub = a.type === "rect" ? "Square" : "Circle";
-    const r = a.rect; rect = [r[0]-w/2, r[1]-w/2, r[2]+w/2, r[3]+w/2];
-    extra.BS = {W:w, S:"S"};
-    if(a.type === "rect") ops = `${col} RG ${n(w)} w ${n(r[0])} ${n(r[1])} ${n(r[2]-r[0])} ${n(r[3]-r[1])} re S`;
-    else {
-      const cx = (r[0]+r[2])/2, cy = (r[1]+r[3])/2, rx = (r[2]-r[0])/2, ry = (r[3]-r[1])/2, k = 0.5523;
-      ops = `${col} RG ${n(w)} w ${n(cx+rx)} ${n(cy)} m ${n(cx+rx)} ${n(cy+ry*k)} ${n(cx+rx*k)} ${n(cy+ry)} ${n(cx)} ${n(cy+ry)} c ${n(cx-rx*k)} ${n(cy+ry)} ${n(cx-rx)} ${n(cy+ry*k)} ${n(cx-rx)} ${n(cy)} c ${n(cx-rx)} ${n(cy-ry*k)} ${n(cx-rx*k)} ${n(cy-ry)} ${n(cx)} ${n(cy-ry)} c ${n(cx+rx*k)} ${n(cy-ry)} ${n(cx+rx)} ${n(cy-ry*k)} ${n(cx+rx)} ${n(cy)} c S`;
-    }
-  } else if(a.type === "arrow"){
-    sub = "Line";
-    const [s, e] = a.pts, ang = Math.atan2(e[1]-s[1], e[0]-s[0]), L = Math.max(6, w*4.5);
-    const h1 = [e[0]-L*Math.cos(ang-0.45), e[1]-L*Math.sin(ang-0.45)], h2 = [e[0]-L*Math.cos(ang+0.45), e[1]-L*Math.sin(ang+0.45)];
-    const xs = [s[0],e[0],h1[0],h2[0]], ys = [s[1],e[1],h1[1],h2[1]];
-    rect = [Math.min(...xs)-w, Math.min(...ys)-w, Math.max(...xs)+w, Math.max(...ys)+w];
-    extra.L = [s[0],s[1],e[0],e[1]]; extra.LE = ["None","ClosedArrow"]; extra.IC = cc; extra.BS = {W:w, S:"S"};
-    ops = `1 J ${col} RG ${col} rg ${n(w)} w ${n(s[0])} ${n(s[1])} m ${n(e[0])} ${n(e[1])} l S ${n(e[0])} ${n(e[1])} m ${n(h1[0])} ${n(h1[1])} l ${n(h2[0])} ${n(h2[1])} l f`;
-  } else if(a.type === "ink"){
-    if(a.pts.length < 2) return;
-    sub = "Ink";
-    const b = annBBox(a); rect = [b[0]-w, b[1]-w, b[2]+w, b[3]+w];
-    extra.InkList = [a.pts.flat()]; extra.BS = {W:w, S:"S"};
-    ops = `1 J 1 j ${col} RG ${n(w)} w ` + a.pts.map((q,i)=>`${n(q[0])} ${n(q[1])} ${i?"l":"m"}`).join(" ") + " S";
-  } else return;
-  const ap = ctx.register(ctx.flateStream(ops, {Type:"XObject", Subtype:"Form", BBox:rect, Resources:res}));
-  const dict = ctx.obj({Type:"Annot", Subtype:sub, Rect:rect, C:cc, F:4, T:PDFHexString.fromText("PDF Editor"), M:PDFString.fromDate(new Date()), AP:{N:ap}, ...extra});
-  page.node.addAnnot(ctx.register(dict));
-}
-async function addSummaryPage(doc, m){
-  const {StandardFonts, rgb} = PDFLib;
-  const f = await doc.embedFont(StandardFonts.Helvetica), fb = await doc.embedFont(StandardFonts.HelveticaBold);
-  const safe = t => String(t).replace(/[\u2018\u2019]/g,"'").replace(/[\u201c\u201d]/g,'"').replace(/[\u2013\u2014]/g,"-").replace(/[^\x20-\x7E\xA0-\xFF]/g,"?");
-  const pg = doc.addPage([595.28, 841.89]);
-  let y = 780;
-  const line = (t, o={}) => {
-    const font = o.bold ? fb : f, size = o.size || 10.5, maxW = 595.28 - 120;
-    const words = safe(t).split(" "); let cur = "";
-    const flush = () => { pg.drawText(cur, {x:60 + (o.indent||0), y, size, font, color:o.color||rgb(0.1,0.1,0.12)}); y -= size*1.45; cur = ""; };
-    for(const w of words){ const tryS = cur ? cur+" "+w : w; if(font.widthOfTextAtSize(tryS, size) > maxW - (o.indent||0) && cur) flush(), cur = w; else cur = tryS; }
-    if(cur) flush();
-  };
-  line("Signing summary", {bold:true, size:18}); y -= 6;
-  line("Document: " + S.name);
-  line("Pages (excluding this summary): " + m.pages.length);
-  const hash = m.signLog[m.signLog.length-1].hash || "";
-  line("SHA-256 fingerprint of the original uploaded PDF:");
-  line(hash.slice(0,32), {indent:12, size:9.5}); line(hash.slice(32), {indent:12, size:9.5});
-  line("Summary created: " + new Date().toLocaleString() + " (" + new Date().toISOString() + ")");
-  y -= 8; line("Signing events", {bold:true, size:13}); y -= 2;
-  m.signLog.forEach((e, i) => {
-    line(`${i+1}. ${e.signer} signed ${e.fields} field${e.fields>1?"s":""} (${e.kinds.join(", ")})`, {bold:true});
-    line(`${new Date(e.at).toLocaleString()} (UTC ${e.at})`, {indent:14});
-    line("Agreed to sign electronically before finishing.", {indent:14});
-    y -= 4;
-  });
-  const open = m.annots.filter(a=>a.type==="field" && !a.locked).length;
-  if(open) line(`${open} field${open>1?"s were":" was"} not signed.`, {color:rgb(0.7,0.1,0.1)});
-  y -= 8;
-  line("About these signatures", {bold:true, size:12});
-  line("Signatures were applied with simple electronic signing on one device. Each signer ticked a consent box before finishing. No identity verification was performed, and these are not certificate-based digital signatures. The fingerprint above identifies the original file that was uploaded before any changes.", {size:9.5, color:rgb(0.3,0.3,0.35)});
 }
 const itemsOf2 = (sp, m) => { const o = m.ocr && m.ocr[sp.key]; return o ? sp.items.concat(o) : sp.items; };
 async function exportColors(X, p, sp, d){
@@ -2660,8 +2177,6 @@ async function renderLibrary(){
     $("exportBtn").disabled = $("importBtn").disabled = true; return;
   }
   docs.sort((a,b)=>b.updated-a.updated);
-  cleanupOrphans();
-  storageInfo(); refreshSigRow();
   if(!docs.length){ list.innerHTML = `<p class="note2" style="margin:0">No saved documents yet. Open a PDF to get started.</p>`; return; }
   list.innerHTML = "";
   for(const d of docs){
@@ -2671,7 +2186,6 @@ async function renderLibrary(){
     row.innerHTML = `<div class="meta"><div class="nm"></div><div class="sub">${edits} change${edits===1?"":"s"}${vers?` · ${vers} version${vers>1?"s":""}`:""} · ${fmtSize(d.size || d.bytes?.byteLength || 0)} · ${fmtDate(d.updated)}</div></div>`;
     row.querySelector(".nm").textContent = d.name;
     const ob = document.createElement("button"); ob.className = "btn primary"; ob.textContent = "Open"; ob.onclick = () => openSaved(d.id);
-    const rb = document.createElement("button"); rb.className = "btn"; rb.textContent = "Rename"; rb.onclick = () => renameDialog(d.id, d.name);
     const db = document.createElement("button"); db.className = "btn danger"; db.textContent = "Delete";
     db.onclick = async () => {
       if(db.dataset.armed){
@@ -2679,58 +2193,10 @@ async function renderLibrary(){
         renderLibrary(); return;
       }
       db.dataset.armed = "1"; db.textContent = "Confirm delete";
-      setTimeout(()=>{ if(db.isConnected){ delete db.dataset.armed; db.textContent = "Delete"; } }, 6000);
+      setTimeout(()=>{ if(db.isConnected){ delete db.dataset.armed; db.textContent = "Delete"; } }, 4000);
     };
-    row.append(ob, rb, db); list.appendChild(row);
+    row.append(ob, db); list.appendChild(row);
   }
-}
-function refreshSigRow(){
-  let raw = ""; try{ raw = localStorage.getItem("pdfed-sigs") || ""; }catch(e){}
-  let count = 0; try{ count = JSON.parse(raw || "[]").length; }catch(e){}
-  $("sigRow").classList.toggle("hidden", !count);
-  $("sigInfo").textContent = `${count} saved signature${count===1?"":"s"} on this device (${fmtSize(raw.length)}).`;
-}
-$("sigClear").onclick = () => { try{ localStorage.removeItem("pdfed-sigs"); }catch(e){} refreshSigRow(); toast("Saved signatures deleted"); };
-// Remove PDF data that no saved document refers to (left behind by interrupted saves or deletes).
-async function cleanupOrphans(){
-  try{
-    const docs = await DB.all("docs"), blobs = await DB.all("blobs");
-    const used = new Set(docs.flatMap(d => d.srcIds || []));
-    for(const b of blobs) if(!used.has(b.id)) await DB.del("blobs", b.id);
-  }catch(e){ console.warn("cleanup skipped", e); }
-}
-function renameDialog(id, cur){
-  modal(`<h3>Rename document</h3><input type="text" id="rnIn" autocomplete="off"><div class="acts"><button class="btn" id="rnC">Cancel</button><button class="btn primary" id="rnOk">Rename</button></div>`);
-  const inp = $("rnIn"); inp.value = cur; inp.focus(); inp.select();
-  const go = async () => {
-    let name = inp.value.trim(); if(!name){ inp.focus(); return; }
-    if(!/\.pdf$/i.test(name)) name += ".pdf";
-    try{
-      if(S.docId === id){ S.name = name; $("fileName").textContent = name; document.title = name + " · PDF Editor"; await saveNow(); }
-      else { const d = await DB.get("docs", id); if(d){ d.name = name; await DB.put("docs", d); } }
-      closeModal(); toast("Renamed"); if(!S.m) renderLibrary();
-    }catch(e){ fail("Couldn't rename", e); }
-  };
-  $("rnOk").onclick = go; $("rnC").onclick = closeModal;
-  inp.addEventListener("keydown", e => { if(e.key==="Enter") go(); if(e.key==="Escape") closeModal(); e.stopPropagation(); });
-}
-$("fileName").title = "Click to rename"; $("fileName").style.cursor = "pointer";
-$("fileName").onclick = () => { if(S.m) renameDialog(S.docId, S.name); };
-async function storageInfo(){
-  const el = $("storageInfo");
-  try{
-    const est = await navigator.storage.estimate();
-    const used = est.usage || 0, quota = est.quota || 0;
-    const free = quota - used;
-    el.textContent = quota ? `Storage: ${fmtSize(used)} used of about ${fmtSize(quota)} available to this site in this browser.` : "";
-    el.style.color = "";
-    if(quota && (free < 100*1048576 || used/quota > 0.85)){ el.textContent += " Space is running low. Export a backup, then delete documents you no longer need."; el.style.color = "var(--danger)"; }
-    return {used, quota, free};
-  }catch(e){ el.textContent = ""; return null; }
-}
-async function checkSpace(){
-  const s = await storageInfo();
-  if(s && s.quota && (s.free < 100*1048576 || s.used/s.quota > 0.85)) toast("Browser storage is nearly full. Export a backup and delete documents you no longer need.", 7000, true);
 }
 async function goHome(){
   finishEdit();
@@ -2738,8 +2204,7 @@ async function goHome(){
   closeSession();
   pagesEl.classList.add("hidden"); $("home").classList.remove("hidden");
   $("fileName").textContent = ""; $("saveState").textContent = ""; document.title = "PDF Editor";
-  for(const id of ["dlBtn","verBtn","insertBtn","mergeBtn","modeEdit","modeSign"]) $(id).disabled = true;
-  $("tools").classList.remove("hidden"); $("signTools").classList.add("hidden"); S.mode = "edit";
+  for(const id of ["dlBtn","verBtn","insertBtn","mergeBtn"]) $(id).disabled = true;
   H.past.length = H.future.length = 0; updUndo();
   renderLibrary();
 }
