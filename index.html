@@ -5,26 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PDF Text Editor</title>
 <style>
-@font-face{font-family:"M-Sans";src:url(fonts/LiberationSans-Regular.ttf);font-weight:400;font-style:normal}
-@font-face{font-family:"M-Sans";src:url(fonts/LiberationSans-Bold.ttf);font-weight:700;font-style:normal}
-@font-face{font-family:"M-Sans";src:url(fonts/LiberationSans-Italic.ttf);font-weight:400;font-style:italic}
-@font-face{font-family:"M-Sans";src:url(fonts/LiberationSans-BoldItalic.ttf);font-weight:700;font-style:italic}
-@font-face{font-family:"M-Serif";src:url(fonts/LiberationSerif-Regular.ttf);font-weight:400;font-style:normal}
-@font-face{font-family:"M-Serif";src:url(fonts/LiberationSerif-Bold.ttf);font-weight:700;font-style:normal}
-@font-face{font-family:"M-Serif";src:url(fonts/LiberationSerif-Italic.ttf);font-weight:400;font-style:italic}
-@font-face{font-family:"M-Serif";src:url(fonts/LiberationSerif-BoldItalic.ttf);font-weight:700;font-style:italic}
-@font-face{font-family:"M-Mono";src:url(fonts/LiberationMono-Regular.ttf);font-weight:400;font-style:normal}
-@font-face{font-family:"M-Mono";src:url(fonts/LiberationMono-Bold.ttf);font-weight:700;font-style:normal}
-@font-face{font-family:"M-Mono";src:url(fonts/LiberationMono-Italic.ttf);font-weight:400;font-style:italic}
-@font-face{font-family:"M-Mono";src:url(fonts/LiberationMono-BoldItalic.ttf);font-weight:700;font-style:italic}
-@font-face{font-family:"M-Carlito";src:url(fonts/Carlito-Regular.ttf);font-weight:400;font-style:normal}
-@font-face{font-family:"M-Carlito";src:url(fonts/Carlito-Bold.ttf);font-weight:700;font-style:normal}
-@font-face{font-family:"M-Carlito";src:url(fonts/Carlito-Italic.ttf);font-weight:400;font-style:italic}
-@font-face{font-family:"M-Carlito";src:url(fonts/Carlito-BoldItalic.ttf);font-weight:700;font-style:italic}
-@font-face{font-family:"M-Caladea";src:url(fonts/Caladea-Regular.ttf);font-weight:400;font-style:normal}
-@font-face{font-family:"M-Caladea";src:url(fonts/Caladea-Bold.ttf);font-weight:700;font-style:normal}
-@font-face{font-family:"M-Caladea";src:url(fonts/Caladea-Italic.ttf);font-weight:400;font-style:italic}
-@font-face{font-family:"M-Caladea";src:url(fonts/Caladea-BoldItalic.ttf);font-weight:700;font-style:italic}
+@font-face{font-family:"M-Sans";src:url(LiberationSans-Regular.ttf);font-weight:400;font-style:normal}
+@font-face{font-family:"M-Sans";src:url(LiberationSans-Bold.ttf);font-weight:700;font-style:normal}
+@font-face{font-family:"M-Sans";src:url(LiberationSans-Italic.ttf);font-weight:400;font-style:italic}
+@font-face{font-family:"M-Sans";src:url(LiberationSans-BoldItalic.ttf);font-weight:700;font-style:italic}
+@font-face{font-family:"M-Serif";src:url(LiberationSerif-Regular.ttf);font-weight:400;font-style:normal}
+@font-face{font-family:"M-Serif";src:url(LiberationSerif-Bold.ttf);font-weight:700;font-style:normal}
+@font-face{font-family:"M-Serif";src:url(LiberationSerif-Italic.ttf);font-weight:400;font-style:italic}
+@font-face{font-family:"M-Serif";src:url(LiberationSerif-BoldItalic.ttf);font-weight:700;font-style:italic}
+@font-face{font-family:"M-Mono";src:url(LiberationMono-Regular.ttf);font-weight:400;font-style:normal}
+@font-face{font-family:"M-Mono";src:url(LiberationMono-Bold.ttf);font-weight:700;font-style:normal}
+@font-face{font-family:"M-Mono";src:url(LiberationMono-Italic.ttf);font-weight:400;font-style:italic}
+@font-face{font-family:"M-Mono";src:url(LiberationMono-BoldItalic.ttf);font-weight:700;font-style:italic}
+@font-face{font-family:"M-Carlito";src:url(Carlito-Regular.ttf);font-weight:400;font-style:normal}
+@font-face{font-family:"M-Carlito";src:url(Carlito-Bold.ttf);font-weight:700;font-style:normal}
+@font-face{font-family:"M-Carlito";src:url(Carlito-Italic.ttf);font-weight:400;font-style:italic}
+@font-face{font-family:"M-Carlito";src:url(Carlito-BoldItalic.ttf);font-weight:700;font-style:italic}
+@font-face{font-family:"M-Caladea";src:url(Caladea-Regular.ttf);font-weight:400;font-style:normal}
+@font-face{font-family:"M-Caladea";src:url(Caladea-Bold.ttf);font-weight:700;font-style:normal}
+@font-face{font-family:"M-Caladea";src:url(Caladea-Italic.ttf);font-weight:400;font-style:italic}
+@font-face{font-family:"M-Caladea";src:url(Caladea-BoldItalic.ttf);font-weight:700;font-style:italic}
 
 :root{
   --bg:#eceae6; --panel:#ffffff; --ink:#1d1d1f; --muted:#6b6b70; --line:#d9d6d0;
@@ -129,13 +129,13 @@ main{padding:24px 16px 80px;display:flex;flex-direction:column;align-items:cente
 </div>
 <div id="toast"></div>
 
-<script src="lib/pdf.min.js"></script>
-<script src="lib/pdf-lib.min.js"></script>
-<script src="lib/fontkit.umd.min.js"></script>
+<script src="pdf.min.js"></script>
+<script src="pdf-lib.min.js"></script>
+<script src="fontkit.umd.min.js"></script>
 <script>
 (() => {
 "use strict";
-pdfjsLib.GlobalWorkerOptions.workerSrc = new URL("lib/pdf.worker.min.js", location.href).href;
+pdfjsLib.GlobalWorkerOptions.workerSrc = new URL("pdf.worker.min.js", location.href).href;
 
 // Bundled metric-compatible fonts. a/d = hhea ascent/descent as fraction of em.
 const FAMILIES = {
@@ -632,7 +632,7 @@ const fileCache = new Map();
 async function loadBundled(fam, bold, italic){
   const F = FAMILIES[fam];
   const sty = bold&&italic?"BoldItalic":bold?"Bold":italic?"Italic":"Regular";
-  const url = `fonts/${F.file}-${sty}.ttf`;
+  const url = `${F.file}-${sty}.ttf`;
   if(!fileCache.has(url)) fileCache.set(url, fetch(url).then(r=>{ if(!r.ok) throw new Error("font"); return r.arrayBuffer(); }));
   return fileCache.get(url);
 }
