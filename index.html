@@ -58,7 +58,8 @@ header{background:var(--panel);border-bottom:1px solid var(--line);flex:none;z-i
 .spacer{flex:1}
 #fileName{font-weight:550;max-width:28vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #saveState{font-size:12px;color:var(--muted);white-space:nowrap}
-#zoomVal{min-width:48px;text-align:center;font-size:12.5px;color:var(--muted);cursor:pointer;flex:none}
+#zoomVal{width:64px;text-align:center;font:inherit;font-size:12.5px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);padding:4px;flex:none}
+.sigRow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px}
 #colorIn{width:30px;height:28px;border:1px solid var(--line);border-radius:6px;padding:2px;background:var(--panel);cursor:pointer;flex:none}
 #searchBar{display:flex;align-items:center;gap:6px;padding:6px 12px;border-top:1px solid var(--line);background:var(--panel);flex-wrap:wrap}
 #searchBar input[type=text]{border:1px solid var(--line);border-radius:7px;padding:6px 9px;background:var(--panel);color:var(--ink);font:inherit;width:200px;max-width:42vw}
@@ -237,7 +238,7 @@ header{background:var(--panel);border-bottom:1px solid var(--line);flex:none;z-i
     <button class="ib" id="ocrBtn" title="Recognize text in scanned pages (OCR)" data-i="ocr"></button>
     <span class="sep"></span>
     <button class="ib" id="zoomOut" title="Zoom out (Ctrl+-)" data-i="minus"></button>
-    <span id="zoomVal" title="Fit width (Ctrl+0)">100%</span>
+    <input type="text" id="zoomVal" value="100%" list="zoomList" inputmode="numeric" title="Zoom: type a percentage (10% to 400%). 100% = fit to width. Ctrl+0 resets."><datalist id="zoomList"></datalist>
     <button class="ib" id="zoomIn" title="Zoom in (Ctrl+=)" data-i="plus"></button>
   </div>
   <div class="row2 hidden" id="signTools">
@@ -289,6 +290,7 @@ header{background:var(--panel);border-bottom:1px solid var(--line);flex:none;z-i
         </div>
         <div id="docList"></div>
         <p class="note2" id="storageInfo"></p>
+        <div class="sigRow hidden" id="sigRow"><span class="note2" id="sigInfo" style="margin:0"></span><button class="btn danger" id="sigClear">Delete saved signatures</button></div>
         <p class="note2">Documents and edits save automatically in <b>this browser on this device only</b>. They are not a permanent backup: clearing browsing data, using a private window or uninstalling the browser deletes them. Use <b>Export backup</b> regularly and keep the file somewhere safe (for example Google Drive); <b>Restore backup</b> brings everything back on any device.</p>
       </section>
     </div>
@@ -1086,7 +1088,7 @@ function computeScale(){
   const avail = Math.max(240, mainEl.clientWidth - 36);
   S.fit = Math.min(avail / maxW, 2.2);
   S.scale = S.fit * S.zoom;
-  $("zoomVal").textContent = Math.round(S.scale/ (96/72) * 100) + "%";
+  $("zoomVal").value = Math.round(S.zoom * 100) + "%";
 }
 function rebuildViews(){
   hideFloats();
@@ -1155,8 +1157,11 @@ function buildItems(view, sp){
   if(view.items) for(const it of view.items) it.el.remove();
   view.items = itemsOf(sp).map(d => makeItem(view, sp, d));
 }
-function refreshAll(){ for(const v of S.views.values()) refreshView(v); positionFloats(); }
+function refreshAll(){ for(const v of S.views.values()) if(v.rendered) refreshView(v); positionFloats(); }
+// Text can be clicked to edit in Select and Edit modes, but not while signing or drawing.
+function inlineEditable(){ return S.mode !== "sign" && (S.tool === "select" || S.tool === "edit"); }
 function refreshView(view){
+  if(!view.rendered) return; // pages not on screen are refreshed when they render
   if(view.items){
     const sp = view.items[0]?.sp;
     if(sp && itemsOf(sp).length !== view.items.length) buildItems(view, sp);
@@ -1171,11 +1176,12 @@ function makeItem(view, sp, d){
   const el = document.createElement("span");
   el.className = "ti"; el.spellcheck = false;
   const it = {kind:"item", view, sp, d, key:view.uid+"|"+d.i, el};
-  el.addEventListener("pointerdown", e => {
-    if(active === it){ e.stopPropagation(); return; }
-    if(S.tool === "edit"){ e.preventDefault(); e.stopPropagation(); startEdit(it, e); }
+  el.addEventListener("pointerdown", e => { if(active === it) e.stopPropagation(); });
+  el.addEventListener("click", e => {
+    if(!inlineEditable()) return;
+    e.stopPropagation();
+    if(active !== it) startEdit(it, e);
   });
-  el.addEventListener("dblclick", e => { if(S.tool === "select" && active !== it){ e.preventDefault(); startEdit(it, e); } });
   wireEditable(el);
   view.layer.appendChild(el);
   return it;
@@ -1459,11 +1465,12 @@ function drawAnnots(view){
       if(!el){
         el = document.createElement("span"); el.className = "tb"; el.spellcheck = false; el.dataset.id = id;
         wireEditable(el); view.tbEls.set(id, el); view.nlayer.appendChild(el);
-        el.addEventListener("pointerdown", e => {
-          if(active && active.el === el){ e.stopPropagation(); return; }
-          if(S.tool === "edit" || S.tool === "addtext"){ e.preventDefault(); e.stopPropagation(); startEdit({kind:"tb", id, view, el}, e); }
+        el.addEventListener("pointerdown", e => { if(active && active.el === el) e.stopPropagation(); });
+        el.addEventListener("click", e => {
+          if(!(inlineEditable() || S.tool === "addtext")) return;
+          e.stopPropagation();
+          if(!(active && active.el === el)) startEdit({kind:"tb", id, view, el}, e);
         });
-        el.addEventListener("dblclick", e => { if(S.tool==="select"){ e.preventDefault(); startEdit({kind:"tb", id, view, el}, e); } });
       }
       if(!(active && active.el === el) && el.textContent !== a.text) el.textContent = a.text;
       layoutText({kind:"tb", id, view, el});
@@ -1490,8 +1497,9 @@ function drawSelBox(view, a){
 }
 function selectAnn(id){
   if(S.sel === id) return;
+  const prev = S.sel && annById(S.sel), cur = id && annById(id);
   S.sel = id;
-  for(const v of S.views.values()) drawAnnots(v);
+  for(const u of new Set([prev && prev.uid, cur && cur.uid].filter(Boolean))){ const v = S.views.get(u); if(v) drawAnnots(v); }
   closeNote(false);
   positionFloats();
 }
@@ -1580,7 +1588,10 @@ function onPageDown(view, e){
       const a = annById(hit.dataset.id); if(!a) return;
       e.preventDefault();
       selectAnn(a.id);
-      beginMove(view, e, a, () => { if(a.type==="note") openNote(a); });
+      beginMove(view, e, a, () => {
+        if(a.type==="note") openNote(a);
+        else if(a.type==="text" && inlineEditable()){ const el = view.tbEls.get(a.id); if(el) startEdit({kind:"tb", id:a.id, view, el}, e); }
+      });
       return;
     }
     if(!t.closest(".ti")) selectAnn(null);
@@ -1969,18 +1980,38 @@ $("ocrBtn").onclick = async () => {
 };
 
 // ============================================================ zoom & keys
-const ZOOMS = [0.5, 0.67, 0.8, 1, 1.25, 1.5, 2, 2.5, 3];
-function setZoom(z){
+// Zoom is a percentage of "fit to width" (100%). Steps are 10%; any value from 10% to 400% can be typed in.
+const ZMIN = 10, ZMAX = 400;
+const zoomPct = () => Math.round(S.zoom * 100);
+function setZoomPct(p){
   if(!S.m) return;
   finishEdit();
   const ratio = mainEl.scrollTop / Math.max(1, mainEl.scrollHeight);
-  S.zoom = clamp(z, 0.25, 4); rebuildViews();
+  S.zoom = clamp(Math.round(p), ZMIN, ZMAX) / 100; rebuildViews();
   mainEl.scrollTop = ratio * mainEl.scrollHeight;
+  $("zoomVal").value = zoomPct() + "%";
 }
-$("zoomIn").onclick = () => setZoom(ZOOMS.find(z=>z > S.zoom+0.01) || S.zoom);
-$("zoomOut").onclick = () => setZoom([...ZOOMS].reverse().find(z=>z < S.zoom-0.01) || S.zoom);
-$("zoomVal").onclick = () => setZoom(1);
-mainEl.addEventListener("wheel", e => { if(e.ctrlKey && S.m){ e.preventDefault(); clearTimeout(setZoom._t); const z = S.zoom * (e.deltaY < 0 ? 1.1 : 0.9); S.zoom = z; setZoom._t = setTimeout(()=>setZoom(z), 120); } }, {passive:false});
+(function fillZoomList(){
+  let h = ""; for(let p = ZMIN; p <= ZMAX; p += 10) h += `<option value="${p}%">`;
+  $("zoomList").innerHTML = h;
+})();
+$("zoomIn").onclick = () => setZoomPct((Math.floor(zoomPct()/10) + 1) * 10);
+$("zoomOut").onclick = () => setZoomPct((Math.ceil(zoomPct()/10) - 1) * 10);
+function commitZoomInput(){
+  const n = parseFloat(String($("zoomVal").value).replace(/[^0-9.]/g, ""));
+  if(isFinite(n) && n >= ZMIN && n <= ZMAX) setZoomPct(n);
+  else { toast(`Enter a zoom from ${ZMIN}% to ${ZMAX}%`, 2500); $("zoomVal").value = zoomPct() + "%"; }
+}
+$("zoomVal").addEventListener("change", commitZoomInput);
+$("zoomVal").addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); commitZoomInput(); $("zoomVal").blur(); } e.stopPropagation(); });
+$("zoomVal").addEventListener("focus", () => $("zoomVal").select());
+mainEl.addEventListener("wheel", e => {
+  if(!(e.ctrlKey && S.m)) return;
+  e.preventDefault();
+  const target = (zoomPct() + (e.deltaY < 0 ? 10 : -10));
+  clearTimeout(setZoomPct._t); setZoomPct._t = setTimeout(()=>setZoomPct(Math.floor(target/10)*10 || 10), 120);
+  $("zoomVal").value = target + "%";
+}, {passive:false});
 const TOOLKEYS = {v:"select", t:"edit", a:"addtext", h:"highlight", u:"underline", k:"strike", n:"note", r:"rect", o:"ellipse", l:"arrow", p:"pen", x:"redact"};
 document.addEventListener("keydown", e => {
   const tag = (e.target.tagName||"").toUpperCase();
@@ -1991,7 +2022,7 @@ document.addEventListener("keydown", e => {
   if(mod && k === "s"){ e.preventDefault(); if(S.m) saveVersionDialog(); return; }
   if(mod && (k === "=" || k === "+")){ e.preventDefault(); $("zoomIn").click(); return; }
   if(mod && k === "-"){ e.preventDefault(); $("zoomOut").click(); return; }
-  if(mod && k === "0"){ e.preventDefault(); setZoom(1); return; }
+  if(mod && k === "0"){ e.preventDefault(); setZoomPct(100); return; }
   if(typing) return;
   if(mod && k === "z"){ e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
   if(mod && k === "y"){ e.preventDefault(); redo(); return; }
@@ -2629,7 +2660,8 @@ async function renderLibrary(){
     $("exportBtn").disabled = $("importBtn").disabled = true; return;
   }
   docs.sort((a,b)=>b.updated-a.updated);
-  storageInfo();
+  cleanupOrphans();
+  storageInfo(); refreshSigRow();
   if(!docs.length){ list.innerHTML = `<p class="note2" style="margin:0">No saved documents yet. Open a PDF to get started.</p>`; return; }
   list.innerHTML = "";
   for(const d of docs){
@@ -2647,10 +2679,25 @@ async function renderLibrary(){
         renderLibrary(); return;
       }
       db.dataset.armed = "1"; db.textContent = "Confirm delete";
-      setTimeout(()=>{ if(db.isConnected){ delete db.dataset.armed; db.textContent = "Delete"; } }, 4000);
+      setTimeout(()=>{ if(db.isConnected){ delete db.dataset.armed; db.textContent = "Delete"; } }, 6000);
     };
     row.append(ob, rb, db); list.appendChild(row);
   }
+}
+function refreshSigRow(){
+  let raw = ""; try{ raw = localStorage.getItem("pdfed-sigs") || ""; }catch(e){}
+  let count = 0; try{ count = JSON.parse(raw || "[]").length; }catch(e){}
+  $("sigRow").classList.toggle("hidden", !count);
+  $("sigInfo").textContent = `${count} saved signature${count===1?"":"s"} on this device (${fmtSize(raw.length)}).`;
+}
+$("sigClear").onclick = () => { try{ localStorage.removeItem("pdfed-sigs"); }catch(e){} refreshSigRow(); toast("Saved signatures deleted"); };
+// Remove PDF data that no saved document refers to (left behind by interrupted saves or deletes).
+async function cleanupOrphans(){
+  try{
+    const docs = await DB.all("docs"), blobs = await DB.all("blobs");
+    const used = new Set(docs.flatMap(d => d.srcIds || []));
+    for(const b of blobs) if(!used.has(b.id)) await DB.del("blobs", b.id);
+  }catch(e){ console.warn("cleanup skipped", e); }
 }
 function renameDialog(id, cur){
   modal(`<h3>Rename document</h3><input type="text" id="rnIn" autocomplete="off"><div class="acts"><button class="btn" id="rnC">Cancel</button><button class="btn primary" id="rnOk">Rename</button></div>`);
